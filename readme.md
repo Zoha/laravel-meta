@@ -10,14 +10,14 @@ a laravel package for working with meta !
 # introduction
 
 Sometimes our models in laravel needs a lot of information that should be stored in the database.
-For example, suppose you want to create a blog and add a model for posts on this blog.
+For example, Suppose you want to create a blog and add a model for posts on this blog.
 The most important information that this model will need is its title and content.
-But this model may also have more information, such as the number of likes, download links, thumbnails, views, and more.
-When the amount of this information is high, we need to create more columns for the model table, which, if there are too many, will be difficult.
-Additionally, each of these posts may have their own unique information that the rest of the posts do not need.
-In such cases, this package will help. If we want to explain this package simply:
-laravel Meta allows you to store information for each of your models and easily access them without having to create new columns for this information in the database tables.
-If you still do not notice it, just look at the examples below 
+But this model may also have more information, Such as the number of likes, download links, thumbnails, views, and more.
+When the amount of this information is high, We need to create more columns for the model table, Which if there are too many, Will be difficult.
+Additionally, Each of these posts may have their own unique information that the rest of the posts do not need.
+In such cases, This package will help. If we want to explain this package simply:
+Laravel Meta allows you to store information for each of your models and easily access them without having to create new columns for this information in the database tables.
+If you still do not notice it, Just look at the examples below.
 
 # Features
    - It is easy to store and receive meta for each model
@@ -25,7 +25,7 @@ If you still do not notice it, just look at the examples below
    - Minimum number of queries and complete optimization
    - Ability to filter database records by meta
 # Installation
-First , require this package with composer
+First , Require this package with composer
 ```
  $ composer require zoha/laravel-meta
 ```
@@ -33,7 +33,7 @@ And execute migrate command to migrate meta table
 ```
  $ php artisan migrate
 ```
-And then to add meta functionality to each of your models, you just need to extends it from MetableModel instead of the Model.
+And then to add meta functionality to each of your models, You just need to extends it from MetableModel instead of the Model.
 ```PHP
 use Zoha\MetableModel;
 
@@ -52,15 +52,16 @@ class Post extends Model
     ...
 }
 ```
+Thats it! Now you can use all of the Laravel meta features
 > In all of the examples below, we assume that the $post is set to Post::first() which Post model is an example model
 
 # Basic Methods
 ### Create New Meta
-for create a meta you can use `createMeta` on Model : 
+For create a meta you can use `createMeta` on Model : 
 ```PHP
 $post->createMeta('key' , 'value');
 ```
-or you can create multiple meta like this : 
+Or you can create multiple meta like this : 
 ```PHP
 $post->createMeta([
     'key1' => 'value1',
@@ -70,11 +71,11 @@ $post->createMeta([
 @return : `createMeta` method returns **true** if the meta creation is performed successfully and **false** otherwise
 > `addMeta` method is alias of `createMeta` method
 ### Update Meta
-for update a meta you can use `updateMeta` on Model : 
+For update a meta you can use `updateMeta` on Model : 
 ```PHP
 $post->updateMeta('key' , 'new value');
 ```
-or you can update multiple meta like this : 
+Or you can update multiple meta like this : 
 ```PHP
 $post->updateMeta([
     'key1' => 'new value 1',
@@ -83,13 +84,13 @@ $post->updateMeta([
 ```
 @return : If the update was successful `updateMeta` return **true** . but if meta already not exists or updating was faild **false** will be returned
 ### Create Or update Meta
-for create or update meta use `setMeta` method
+For create or update meta use `setMeta` method
 this method will update meta or create a new one if not exists yet
 ```PHP
 $post->setMeta('key' , 'value'); // create meta
 $post->setMeta('key' , 'new value'); // update meta
 ```
-or you can set multiple meta like this
+Or you can set multiple meta like this
 ```PHP
 $post->setMeta([
     'key1' => 'value 1',
@@ -98,7 +99,7 @@ $post->setMeta([
 ```
 @return : `setMeta` returns **true** if it is successful. Otherwise it will return **false**
 
-or instead of this method, you can set meta using **meta property** like this :
+Or instead of this method, You can set meta using **meta property** like this :
 ```PHP
 $post->meta->key = 'value';
 $post->meta->save();
@@ -112,32 +113,32 @@ $post->getMeta('key');
 // return value or 'default value ' if not exists or value is null
 $post->getMeta('key' , 'default value')  
 ```
-also you can get meta values using **meta property** : 
+Also you can get meta values using **meta property** : 
 ```PHP
 $post->meta->key // return meta value 
 ```
 ### Delete Meta
-for delete meta use `deleteMeta`  method 
+For delete meta use `deleteMeta`  method 
 ```PHP
 $post->deleteMeta() // delete all meta of this model
 
 $post->deleteMeta('key') // delete a specific meta
 ```
-or you can use `unsetMeta` method  instead . both of methods are the same
+Or you can use `unsetMeta` method  instead . both of methods are the same
 ### Check Meta Exists Or Not
 You can use `hasMeta` method if you want to check there is a particular meta or not ( if meta exists but value equals to null false will be returned )
 ```PHP
 $post->hasMeta() // return true if this model has at least one meta
 $post->hasMeta('key') // return true or false
 ```
-The second argument specifies whether or not to accept null values . if you pass **true** for second argument , and meta exists even if value equals to null true will be returned
+The second argument specifies whether or not to accept null values . If you pass **true** for second argument , and meta exists even if value equals to null true will be returned
 ```PHP
 $post->setMeta('key' , null) // set key to null 
 $post->hasMeta('key') // return false
 $post->hasMeta('key' , true) // return true
 ```
 ### Increase Meta
-you can simply increase meta value using `increaseMeta` method
+You can simply increase meta value using `increaseMeta` method
 ```PHP
 $post->setMeta('key' , 3);
 $post->increaseMeta('key'); // meta value will change to 4
@@ -145,13 +146,13 @@ $post->increaseMeta('key'); // meta value will change to 4
 $post->setMeta('key2' , 'not integer value');
 $post->increaseMeta('key2'); // meta value will not change
 ```
-you can pass second argument for detemine increase step 
+You can pass second argument for detemine increase step 
 ```PHP
 $post->setMeta('key' , 3);
 $post->increaseMeta('key',3); // meta value will change to 6
 ```
 ### Decrease Meta
-you can simply increase meta value using `decreaseMeta` method
+You can simply decrease meta value using `decreaseMeta` method
 ```PHP
 $post->setMeta('key' , 3);
 $post->decreaseMeta('key'); // meta value will change to 2
@@ -159,14 +160,14 @@ $post->decreaseMeta('key'); // meta value will change to 2
 $post->setMeta('key2' , 'not integer value');
 $post->decreaseMeta('key2'); // meta value will not change
 ```
-you can pass second argument for detemine decrease step 
+And you can pass second argument for detemine decrease step 
 ```PHP
 $post->setMeta('key' , 3);
 $post->decreaseMeta('key',3); // meta value will change to 0
 ```
 # Clauses
 ### Where Meta Clause
-filter items by meta value : 
+Filter items by meta value : 
 ```PHP
 $result = Post::whereMeta('key','value');
 // you can use operator :
@@ -188,7 +189,7 @@ $result = Post::where(function($query){
     $query->WhereMeta('key3' , '>' , 100);
 });
 ```
-> **you can use branched filters for all meta clauses**
+> **You can use branched filters for all meta clauses**
 ### Where Meta In Clause
 
 `whereMetaIn` and `whereMetaNotIn` clauses : 
@@ -261,13 +262,13 @@ $result = Post::whereMetaDoesntHave('key')
 ```
 ### Eager Loading
 
-if you call `$post->getMeta('key')` for the first time all of this model meta will be loaded ( once ) and if you try to get another meta from this model another query will not be executed and meta value will loaded from previous query. 
-but if you try to get meta in another model, another query will be executed for new model . if you want get all meta of all models in one query you can use eager loading of meta . you just need to call `withMeta` scope like this :
+If you call `$post->getMeta('key')` for the first time all of this model meta will be loaded ( once ) and if you try to get another meta from this model another query will not be executed and meta value will loaded from previous query. 
+But if you try to get meta in another model, Another query will be executed for new model . If you want get all meta of all models in one query you can use eager loading of meta . you just need to call `withMeta` scope like this :
 ```PHP
 
 $posts = Post::withMeta()->get(); // will return all posts results with their meta values
 ```
-Note that the use of the `with('meta')` will not work
+Note that `with('meta')` will not work
 # Other Methods And Features
 ### Notes
  - by default all collections , arrrays and json values will convert to collection when you try to get them. 
@@ -275,9 +276,9 @@ Note that the use of the `with('meta')` will not work
 ### Data Type
 
 All of `setMeta` , `getMeta` , `updateMeta` And `createMeta` methods accept a third argument that determine meta data type .  there are some examples of this feature :
->available data types : `string` , `integer` , `null` , `collection` , `json` `array` , `boolean`.
+>Available data types : `string` , `integer` , `null` , `collection` , `json` `array` , `boolean`.
 
-in `setMeta` method 
+In `setMeta` method 
 ```PHP
 $post->setMeta('key' , '123' , 'integer');
 $post->meta->key; // 123 ( integer )
@@ -292,9 +293,9 @@ $post->setMeta([
 ],'string' ) // all values will converted to string when you try to get them
 $post->meta->key3; // "[1,2,3]"
 ```
-third argument in `createMeta` and `updateMeta` methods is the same of `setMeta` method
+Third argument in `createMeta` and `updateMeta` methods is the same of `setMeta` method
 
-in `getMeta` method 
+In `getMeta` method 
 ```PHP
 $post->setMeta('key' , 123);
 $post->getMeta('key' , 'null' , 'string'); // "123" (string)
@@ -309,21 +310,6 @@ you are free to use meta model in your project
 ```PHP
 use Zoha\Meta\Models\Meta;
 $count = Meta::count();
-```
-### Meta Table
-If you are eager to know meta table structure :
-```PHP
-Schema::create('meta', function (Blueprint $table) {
-    $table->increments('id');
-    $table->string('key',110);
-    $table->text('value')->nullable();
-    $table->string('type')->default(Meta::META_TYPE_STRING);
-    $table->boolean('status')->default(true);
-    $table->string('owner_type',80);
-    $table->integer('owner_id');
-    $table->unique(['key','owner_type','owner_id']);
-    $table->timestamps();
-});
 ```
 ### License 
 [![Packagist License](https://img.shields.io/apm/l/vim-mode.svg)](http://choosealicense.com/licenses/mit/)
