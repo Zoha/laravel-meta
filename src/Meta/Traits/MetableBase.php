@@ -142,4 +142,34 @@ trait MetableBase
         }
         return parent::__get($property);
     }
+
+    /**
+     * decrease a meta value , create it if not exists
+     *
+     * @param string $key
+     * @param bool $acceptNull
+     * @param null $type
+     * @return bool
+     */
+    public function hasMeta($key = null, $acceptNull = false, $type = null)
+    {
+        if ($key === null) {
+            return (bool)($this->getLoadedMeta()->count());
+        }
+        $meta = $this->getLoadedMeta()->where('key', $key);
+        if (!$meta->count()) {
+            return false;
+        }
+        if ($type !== null) {
+            $returnedType = $meta->first()->type;
+            if ($type !== $returnedType) {
+                return false;
+            }
+        }
+        $meta = $this->getMeta($key, null);
+        if ($meta === null && $acceptNull === false) {
+            return false;
+        }
+        return true;
+    }
 }
