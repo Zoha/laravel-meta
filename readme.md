@@ -7,7 +7,31 @@ a laravel package for working with meta !
 [![Stable Version](https://img.shields.io/badge/stable-v1.1-green.svg)](http://choosealicense.com/licenses/mit/)
 [![Laravel Package](https://img.shields.io/badge/package-Laravel-red.svg)](http://choosealicense.com/licenses/mit/)
 
-# introduction
+1. [Introduction](#introduction)
+2. [Features](#features)
+3. [Installation](#installation)
+4. [Basic Methods](#basic-methods)
+    1. [Create New Meta](#create-new-meta)
+    2. [Update Meta](#update-meta)
+    3. [Create Or update Meta](#create-or-update-meta)
+    4. [Get Meta](#get-meta)
+    5. [Delete Meta](#delete-meta)
+    6. [Check Meta Exists Or Not](#check-meta-exists-or-not)
+    7. [Increase Meta](#increase-meta)
+    8. [Decrease Meta](#decrease-meta)
+5. [Clauses](#clauses)
+    1. [Where Meta Clause](#where-meta-clause)
+    2. [Where Meta In Clause](#where-meta-in-clause)
+    3. [Where Meta Between Clause](#where-meta-between-clause)
+    4. [Where Meta Null Clause](#where-meta-null-clause)
+    5. [Where Meta Has Clause](#where-meta-has-clause)
+    6. [Eager Loading](#eager-loading)
+6. [Other Methods And Features](#other-methods-and-features)
+    1. [Notes](#notes)
+    2. [Data Type](#data-type)
+    3. [Meta Model](#meta-model)
+7. [License](#license)
+# Introduction
 
 Sometimes our models in laravel needs a lot of information that should be stored in the database.
 For example, Suppose you want to create a blog and add a model for posts on this blog.
@@ -311,5 +335,5 @@ you are free to use meta model in your project
 use Zoha\Meta\Models\Meta;
 $count = Meta::count();
 ```
-### License 
+# License 
 [![Packagist License](https://img.shields.io/apm/l/vim-mode.svg)](http://choosealicense.com/licenses/mit/)
