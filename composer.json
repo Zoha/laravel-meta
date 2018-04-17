@@ -4,6 +4,12 @@
     "keywords": ["meta" , "laravel" , "data" , "package"],
     "type": "package",
     "license": "MIT",
+	"version" : "v1.1",
+	"source": {
+        "url": "https://github.com/ZohaBanam/laravel-meta.git",
+        "type": "git",
+		"reference": "0ac3f7b"
+    },
     "require": {
         "illuminate/support": "^5.6",
         "illuminate/database": "^5.6"
