@@ -1,0 +1,2 @@
+set meta with one query
+
