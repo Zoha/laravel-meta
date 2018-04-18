@@ -4,7 +4,7 @@
     "keywords": ["meta" , "laravel" , "data" , "package"],
     "type": "package",
     "license": "MIT",
-	"version" : "v1.1",
+	"version" : "v1.2",
 	"source": {
         "url": "https://github.com/ZohaBanam/laravel-meta.git",
         "type": "git",
