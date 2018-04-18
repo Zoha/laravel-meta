@@ -4,7 +4,7 @@ a laravel package for working with meta !
 
 [![Packagist License](https://img.shields.io/apm/l/vim-mode.svg)](http://choosealicense.com/licenses/mit/)
 [![Test Version](https://img.shields.io/php-eye/symfony/symfony.svg)](http://choosealicense.com/licenses/mit/)
-[![Stable Version](https://img.shields.io/badge/stable-v1.1-green.svg)](http://choosealicense.com/licenses/mit/)
+[![Stable Version](https://img.shields.io/badge/stable-v1.3-green.svg)](http://choosealicense.com/licenses/mit/)
 [![Laravel Package](https://img.shields.io/badge/package-Laravel-red.svg)](http://choosealicense.com/licenses/mit/)
 
 # Page Contents
