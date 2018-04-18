@@ -19,8 +19,6 @@ class MetaServiceProvider extends ServiceProvider
         __DIR__ . '/../../Database/Migrations',
     ];
 
-    private $factories = __DIR__ . '/../../Database/Factories';
-
     //------------------------------------------ Methods --------------------------------------------//
 
     /**
@@ -43,9 +41,6 @@ class MetaServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerMigrations();
-        if(\Meta::isOnDevelop()){
-            $this->registerFactories();
-        }
     }
 
     /**
@@ -55,22 +50,6 @@ class MetaServiceProvider extends ServiceProvider
      */
     private function registerMigrations()
     {
-		if(\Meta::isOnDevelop()){
-			$this->migrations[] =  __DIR__ . '/../../Database/TestCaseMigrations';
-		}
         $this->loadMigrationsFrom($this->migrations);
-    }
-
-    /**
-     * register factories for this package
-     *
-     * @return void
-     */
-    private function registerFactories()
-    {
-        $this->app->singleton(EloquentFactory::class, function ($app) {
-            $faker = $app->make(Faker::class);
-            return EloquentFactory::construct($faker, $this->factories);
-        });
     }
 }
