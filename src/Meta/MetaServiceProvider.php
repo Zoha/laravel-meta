@@ -17,7 +17,6 @@ class MetaServiceProvider extends ServiceProvider
 
     private $migrations = [
         __DIR__ . '/../../Database/Migrations',
-        __DIR__ . '/../../Database/TestCaseMigrations',
     ];
 
     private $factories = __DIR__ . '/../../Database/Factories';
@@ -56,6 +55,9 @@ class MetaServiceProvider extends ServiceProvider
      */
     private function registerMigrations()
     {
+		if(\Meta::isOnDevelop()){
+			$this->migrations[] =  __DIR__ . '/../../Database/TestCaseMigrations';
+		}
         $this->loadMigrationsFrom($this->migrations);
     }
 
