@@ -14,7 +14,7 @@ a laravel package for working with meta !
 4. [Basic Methods](#basic-methods)
     * [Create New Meta](#create-new-meta)
     * [Update Meta](#update-meta)
-    * [Create Or update Meta](#create-or-update-meta)
+    * [Create Or Update Meta](#create-or-update-meta)
     * [Get Meta](#get-meta)
     * [Delete Meta](#delete-meta)
     * [Check Meta Exists Or Not](#check-meta-exists-or-not)
@@ -108,7 +108,7 @@ $post->updateMeta([
 ]);
 ```
 @return : If the update was successful `updateMeta` return **true** . but if meta already not exists or updating was faild **false** will be returned
-### Create Or update Meta
+### Create Or Update Meta
 For create or update meta use `setMeta` method
 this method will update meta or create a new one if not exists yet
 ```PHP
