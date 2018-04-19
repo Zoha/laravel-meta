@@ -136,31 +136,35 @@ $post->meta->save();
 $post->getMeta('key'); 
 
 // return value or 'default value ' if not exists or value is null
-$post->getMeta('key' , 'default value')  
+$post->getMeta('key' , 'default value') ; 
 ```
 Also you can get meta values using **meta property** : 
 ```PHP
-$post->meta->key // return meta value 
+$post->meta->key; // return meta value 
 ```
 ### Delete Meta
 For delete meta use `deleteMeta`  method 
 ```PHP
-$post->deleteMeta() // delete all meta of this model
+$post->deleteMeta(); // delete all meta of this model
 
-$post->deleteMeta('key') // delete a specific meta
+$post->deleteMeta('key'); // delete a specific meta
 ```
-Or you can use `unsetMeta` method  instead . both of methods are the same
+Or you can use `unsetMeta` method  instead . both of methods are the same.
+`truncateMeta` also delete all meta of specific model :
+```PHP
+$post->truncateMeta(); // delete all model meta
+```
 ### Check Meta Exists Or Not
 You can use `hasMeta` method if you want to check there is a particular meta or not ( if meta exists but value equals to null false will be returned )
 ```PHP
-$post->hasMeta() // return true if this model has at least one meta
-$post->hasMeta('key') // return true or false
+$post->hasMeta(); // return true if this model has at least one meta
+$post->hasMeta('key'); // return true or false
 ```
 The second argument specifies whether or not to accept null values . If you pass **true** for second argument , and meta exists even if value equals to null true will be returned
 ```PHP
-$post->setMeta('key' , null) // set key to null 
-$post->hasMeta('key') // return false
-$post->hasMeta('key' , true) // return true
+$post->setMeta('key' , null); // set key to null 
+$post->hasMeta('key'); // return false
+$post->hasMeta('key' , true); // return true
 ```
 ### Increase Meta
 You can simply increase meta value using `increaseMeta` method
@@ -332,7 +336,7 @@ $post->setMeta([
     'key1' => 'value',
     'key2' => 2
     'key3' => [1,2,3] 
-],'string' ) // all values will converted to string when you try to get them
+],'string' ); // all values will converted to string when you try to get them
 $post->meta->key3; // "[1,2,3]"
 ```
 Third argument in `createMeta` and `updateMeta` methods is the same of `setMeta` method
@@ -352,6 +356,18 @@ you are free to use meta model in your project
 ```PHP
 use Zoha\Meta\Models\Meta;
 $count = Meta::count();
+```
+ Note : If you change meta values using meta model ( change database directly ) meta valuse that was loaded before will not be updated . If you want to update them you should call `refreshLoadedMeta` metahod :
+
+```PHP
+use Zoha\Meta\Models\Meta;
+
+$post->meta->key1; // exmaple : return 'test'
+Meta::truncate();
+$post->meta->key1; // still return 'test'
+
+$post->refreshLoadeMeta();
+$post->meta->key1; // will return null
 ```
 # License 
 [![Packagist License](https://img.shields.io/apm/l/vim-mode.svg)](http://choosealicense.com/licenses/mit/)
