@@ -214,6 +214,23 @@ $result = Post::where(function($query){
     $query->WhereMeta('key3' , '>' , 100);
 });
 ```
+You can also pass a array for filter result :
+```PHP
+// all of below conditions will converted to 'AND'
+$result = Post::whereMeta([
+    'key1' => 'value1',
+    [ 'key2' , '!=' , 'value2' ],
+    [ 'key3' , 'value3' ]
+]);
+```
+You can aslso use orWhere for mulitple or where clause :
+```PHP
+$result = Post::orWhereMeta([
+    'key1' => 'value1',
+    [ 'key2' , '!=' , 'value2' ],
+    [ 'key3' , 'value3' ]
+]);
+```
 > **You can use branched filters for all meta clauses**
 ### Where Meta In Clause
 
