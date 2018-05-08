@@ -15,8 +15,21 @@ trait MetableBase
 
     public $loadedMetaItems = null;
     public $loadedMeta = null;
+    protected $countOfMetaJoins = 0;
 
     //------------------------------------------ Methods --------------------------------------------//
+
+    /**
+     * boot method for model events
+     *
+     * @return void
+     */
+    public static function bootMetableBase()
+    {
+        static::deleted(function ($modelItem) {
+            \Zoha\Meta\Models\Meta::where('owner_type', static::class)->where('owner_id', $modelItem->id)->delete();
+        });
+    }
 
     /**
      * for get meta morphMany relation
@@ -73,9 +86,9 @@ trait MetableBase
     public function getLoadedMeta()
     {
         if ($this->loadedMeta == null) {
-            if(property_exists($this , 'meta')){
+            if (property_exists($this, 'meta')) {
                 $this->loadedMeta = $this->meta;
-            }else{
+            } else {
                 $this->loadedMeta = $this->metarelation;
             }
         }
@@ -144,7 +157,7 @@ trait MetableBase
     }
 
     /**
-     * decrease a meta value , create it if not exists
+     * check an perticular meta exists for this model item
      *
      * @param string $key
      * @param bool $acceptNull
@@ -154,7 +167,10 @@ trait MetableBase
     public function hasMeta($key = null, $acceptNull = false, $type = null)
     {
         if ($key === null) {
-            return (bool)($this->getLoadedMeta()->count());
+            if ($acceptNull == true) {
+                return !!$this->getLoadedMeta()->count();
+            }
+            return !!$this->getLoadedMeta()->where('value', '!=', null)->count();
         }
         $meta = $this->getLoadedMeta()->where('key', $key);
         if (!$meta->count()) {
@@ -171,5 +187,19 @@ trait MetableBase
             return false;
         }
         return true;
+    }
+
+    /**
+     * check an perticular meta exists for this model item even if value was null
+     *
+     * @param string $key
+     * @return bool
+     */
+    public function existsMeta($key = null)
+    {
+        if ($key === null) {
+            return !!$this->getLoadedMeta()->count();
+        }
+        return $this->hasMeta($key, true);
     }
 }

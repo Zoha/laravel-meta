@@ -50,8 +50,8 @@ class TestCase extends \Orchestra\Testbench\TestCase
     {
         parent::setUp();
         $this->loadLaravelMigrations(['--database' => 'laravelmeta']);
-        $this->loadMigrationsFrom(__DIR__ . '/../Database/TestCaseMigrations');
-        $this->withFactories(__DIR__ . '/../Database/Factories');
+        $this->loadMigrationsFrom(__DIR__ . '/../database/TestCaseMigrations');
+        $this->withFactories(__DIR__ . '/../database/Factories');
         $this->artisan('migrate', ['--database' => 'laravelmeta']);
     }
 

@@ -26,11 +26,13 @@ a laravel package for working with meta !
     * [Where Meta Between Clause](#where-meta-between-clause)
     * [Where Meta Null Clause](#where-meta-null-clause)
     * [Where Meta Has Clause](#where-meta-has-clause)
+    * [Order By Meta](#order-by-meta)
     * [Eager Loading](#eager-loading)
 6. [Other Methods And Features](#other-methods-and-features)
     * [Notes](#notes)
     * [Data Type](#data-type)
     * [Meta Model](#meta-model)
+    * [Meta Table](#meta-table)
 7. [License](#license)
 # Introduction
 
@@ -53,6 +55,20 @@ If you still do not notice it, Just look at the examples below.
 First , Require this package with composer
 ```
  $ composer require zoha/laravel-meta
+```
+If you Use Laravel <= 5.4 add the ServiceProvider and Alias in config/app.php 
+```
+'providers' => [
+    ...
+    Zoha\Meta\MetaServiceProvider::class,
+    ...
+]
+'aliases' => [
+    ...
+    'Meta' => Zoha\Meta\Facades\MetaFacade::class,
+    ...
+]
+
 ```
 And execute migrate command to migrate meta table 
 ```
@@ -77,7 +93,7 @@ class Post extends Model
     ...
 }
 ```
-Thats it! Now you can use all of the Laravel meta features
+That's it! Now you can use all of the Laravel meta features
 > In all of the examples below, we assume that the $post is set to Post::first() which Post model is an example model
 
 # Basic Methods
@@ -165,6 +181,11 @@ The second argument specifies whether or not to accept null values . If you pass
 $post->setMeta('key' , null); // set key to null 
 $post->hasMeta('key'); // return false
 $post->hasMeta('key' , true); // return true
+```
+If you want to specify that a particular post has a specific meta, even if its value is null , use the `existsMeta` method.
+```PHP
+$post->setMeta('key' , null); // set key to null 
+$post->existsMeta('key'); // return true
 ```
 ### Increase Meta
 You can simply increase meta value using `increaseMeta` method
@@ -306,6 +327,13 @@ $result = Post::whereMetaDoesntHave('key')
                             ->orWhereMetaHas('key2')
                             ->orWhereMetaDoesntHave('key3');
 ```
+### Order By Meta
+You Can Sort Database Results Using  `orderByMeta` clause : 
+```PHP
+Post::orderByMeta('price')->get();
+
+Post::orderByMeta('price' , 'desc')->get();
+```
 ### Eager Loading
 
 If you call `$post->getMeta('key')` for the first time all of this model meta will be loaded ( once ) and if you try to get another meta from this model another query will not be executed and meta value will loaded from previous query. 
@@ -319,6 +347,7 @@ Note that `with('meta')` will not work
 ### Notes
  - by default all collections , arrrays and json values will convert to collection when you try to get them. 
  - all `[]` , `"{}"` , `"[]"` and `null` values will be considered null.
+ - If one of the items in the metable model is deleted, All the meta related to that item will be deleted too.
 ### Data Type
 
 All of `setMeta` , `getMeta` , `updateMeta` And `createMeta` methods accept a third argument that determine meta data type .  there are some examples of this feature :
@@ -368,6 +397,21 @@ $post->meta->key1; // still return 'test'
 
 $post->refreshLoadeMeta();
 $post->meta->key1; // will return null
+```
+### Meta Table
+The structure of the meta table is this : 
+```PHP
+Schema::create('meta', function (Blueprint $table) {
+    $table->increments('id');
+    $table->string('key',110);
+    $table->text('value')->nullable();
+    $table->string('type')->default(Meta::META_TYPE_STRING);
+    $table->boolean('status')->default(true);
+    $table->string('owner_type',80);
+    $table->integer('owner_id');
+    $table->unique(['key','owner_type','owner_id']);
+    $table->timestamps();
+});
 ```
 # License 
 [![Packagist License](https://img.shields.io/apm/l/vim-mode.svg)](http://choosealicense.com/licenses/mit/)

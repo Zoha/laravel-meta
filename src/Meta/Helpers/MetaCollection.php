@@ -26,7 +26,7 @@ class MetaCollection extends Collection
     {
         $this->model = $model;
         $this->temporaryItems = clone $model->getLoadedMeta();
-        parent::__construct($this->model->getLoadedMeta()->pluck('key','value'));
+        parent::__construct($this->model->getLoadedMeta()->pluck('value','key'));
     }
 
     /**
@@ -51,6 +51,11 @@ class MetaCollection extends Collection
         return null; // if value was not founded return null
     }
 
+    /**
+     * set new meta value 
+     * 
+     * @return void
+     */
     public function __set($property , $value)
     {
         $inTemporaryItems = $this->temporaryItems->where('key' , $property);
@@ -69,6 +74,11 @@ class MetaCollection extends Collection
         }
     }
 
+    /**
+     * save meta changes 
+     * 
+     * return bool
+     */
     public function save()
     {
         $changedItems = $this->temporaryItems->where('changed' , true);

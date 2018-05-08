@@ -16,7 +16,7 @@ class MetaServiceProvider extends ServiceProvider
     //----------------------------------------- Properties ------------------------------------------//
 
     private $migrations = [
-        __DIR__ . '/../../Database/Migrations',
+        __DIR__ . '/../../database/Migrations',
     ];
 
     //------------------------------------------ Methods --------------------------------------------//
