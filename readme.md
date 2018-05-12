@@ -142,7 +142,8 @@ $post->setMeta([
 
 Or instead of this method, You can set meta using **meta property** like this :
 ```PHP
-$post->meta->key = 'value';
+$post->meta->key1 = 'value';
+$post->meta->key2 = 'value2';
 $post->meta->save();
 ```
 ### Get Meta
@@ -310,10 +311,10 @@ $result = Post::whereMetaNotNull('key')
 `whereMetaHas` and `whereMetaDoesntHave` clauses : 
 ```PHP
 //filter records that has at least one meta
-$result = Post::whereMetaNull();
+$result = Post::whereMetaHas();
 
-$result = Post::whereMetaNull('key');
-$result = Post::whereMetaNull('key' , true); //count null values
+$result = Post::whereMetaHas('key'); 
+$result = Post::whereMetaHas('key' , true); //count null values
 
 $result = Post::whereMetaDoesntHave('key');
 $result = Post::whereMetaDoesntHave('key' , true); //count null values
@@ -333,6 +334,8 @@ You Can Sort Database Results Using  `orderByMeta` clause :
 Post::orderByMeta('price')->get();
 
 Post::orderByMeta('price' , 'desc')->get();
+
+Post::orderByMeta('price')->orderByMeta('likes' , 'desc')->get();
 ```
 ### Eager Loading
 
@@ -359,14 +362,15 @@ $post->setMeta('key' , '123' , 'integer');
 $post->meta->key; // 123 ( integer )
 //----------------------------------
 $post->setMeta('key' , [1,2,3] , 'json');
-$post->meta->key; // "[1,2,3]"
+$post->meta->key; // "[1,2,3]" ( string - json )
 //----------------------------------
 $post->setMeta([
     'key1' => 'value',
     'key2' => 2
     'key3' => [1,2,3] 
 ],'string' ); // all values will converted to string when you try to get them
-$post->meta->key3; // "[1,2,3]"
+$post->meta->key2; // "2" ( string )
+$post->meta->key3; // "[1,2,3]" ( string json )
 ```
 Third argument in `createMeta` and `updateMeta` methods is the same of `setMeta` method
 
