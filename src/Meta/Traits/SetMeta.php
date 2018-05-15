@@ -3,11 +3,12 @@
 
 namespace Zoha\Meta\Traits;
 
+use Zoha\Meta\Helpers\CreateMetaHelper;
 use Zoha\Meta\Helpers\MetaHelper as Meta;
+use Zoha\Meta\Helpers\UpdateMetaHelper;
 
 trait SetMeta
 {
-
     /**
      * add new meta or update an existing one
      *
@@ -26,232 +27,49 @@ trait SetMeta
      */
     public function setMeta($key, $value = null, $type = null, $createMeta = null)
     {
+        // If the type of operation is specified ( createMeta | updateMeta )
         if ($createMeta !== null) {
             if ($createMeta === false) {
-                return $this->updatingMetaAction($key, $value, $type);
+                return UpdateMetaHelper::updateMeta($this, $key, $value, $type);
             } elseif ($createMeta === true) {
-                return $this->creatingMetaAction($key, $value, $type);
+                return CreateMetaHelper::createMeta($this, $key, $value, $type);
             }
         }
+
+        // handle array of values that passed for the first argument
         if (is_array($key)) {
-            $results = [];
-            foreach ($key as $keyItem => $valueItem) {
-                $results[] = $this->setMeta($keyItem, $valueItem, $value);
-            }
-            foreach ($results as $result) {
-                if ($result === false) {
-                    return false;
-                }
-            }
-            return true;
+            return $this->setMultipleMeta($key, $value);
         }
+
+        // check meta exists or not and execute update or create meta operation
         $currentMeta = $this->getLoadedMeta()->where('key', $key);
         if ($currentMeta->count()) { // if a meta with this key already exists
-            return $this->updatingMetaAction($key, $value, $type);
+            return UpdateMetaHelper::updateMeta($this, $key, $value, $type);
         } else {
-            return $this->creatingMetaAction($key, $value, $type);
+            return CreateMetaHelper::createMeta($this, $key, $value, $type);
         }
     }
 
     /**
-     * updating an existing meta actions
+     * set multiple mta
      *
-     * @param string $key <p> key of meta </p>
-     * @param mixed $value
-     * @param $type <p>this type must be const from Meta class </p>
-     * @return bool : true on success false if meta not founded
-     */
-    private function updatingMetaAction($key, $value, $type)
-    {
-        if (!is_string($key) && !is_array($key)) {
-            return false;
-        }
-
-        $keyIsArray = false;
-
-        // check if meta already exists
-        if (is_array($key)) {
-            $keyIsArray = true;
-            $currentMetaItem = [];
-            foreach ($key as $keyItem => $keyItemValue) {
-                if (!is_string($keyItem) || is_int($keyItem)) {
-                    return false;
-                }
-                $currentMetaItem[$keyItem] = $this->getLoadedMeta()->where('key', $keyItem);
-                if (!$currentMetaItem[$keyItem]->count()) { // if meta not founded
-                    return false;
-                }
-            }
-        } else {
-            $currentMeta = $this->getLoadedMeta()->where('key', $key);
-            if (!$currentMeta->count()) { // if meta not founded
-                return false;
-            }
-        }
-
-        //determine types
-        $types = [];
-        if ($type === null && $keyIsArray == false) {
-            $type = Meta::guessType($value);
-            if ($type == Meta::META_TYPE_COLLECTION || $type == Meta::META_TYPE_ARRAY || $type == Meta::META_TYPE_JSON) {
-                $type = Meta::META_TYPE_COLLECTION;
-            }
-        } elseif ($keyIsArray == true) {
-            foreach ($key as $keyItem => $keyItemValue) {
-                if ($value === null) {
-                    $thisItemType = Meta::guessType($keyItemValue);
-                    if ($thisItemType == Meta::META_TYPE_COLLECTION || $thisItemType == Meta::META_TYPE_ARRAY || $thisItemType == Meta::META_TYPE_JSON) {
-                        $thisItemType = Meta::META_TYPE_COLLECTION;
-                    }
-                    $types[$keyItem] = $thisItemType;
-                } else {
-                    $types[$keyItem] = $value;
-                }
-            }
-        }
-
-        //convert arrays and json's to collection
-        if ($keyIsArray == true) {
-            foreach ($key as $keyItem => $keyItemValue) {
-                if ($types[$keyItem] == Meta::META_TYPE_COLLECTION || $types[$keyItem] == Meta::META_TYPE_ARRAY || $types[$keyItem] == Meta::META_TYPE_JSON) {
-                    $key[$keyItem] = Meta::convertMetaValueToType($keyItemValue, Meta::META_TYPE_JSON);
-                } else {
-                    $key[$keyItem] = Meta::convertMetaValueToType($keyItemValue, $types[$keyItem]);
-                }
-            }
-        } else {
-            if ($type == Meta::META_TYPE_COLLECTION || $type == Meta::META_TYPE_ARRAY || $type == Meta::META_TYPE_JSON) {
-                $value = Meta::convertMetaValueToType($value, Meta::META_TYPE_JSON);
-            } else {
-                $value = Meta::convertMetaValueToType($value, $type);
-            }
-        }
-
-        if ($keyIsArray == false) {
-            $currentMeta = $currentMeta->first();
-            $currentMeta->type = $type;
-            $currentMeta->value = $value;
-            $currentMeta->save();
-            $singleUpdatedMeta = $this->getLoadedMeta()->where('id', $currentMeta->id)->first();
-            $singleUpdatedMeta->type = $type;
-            $singleUpdatedMeta->value = $value;
-            $this->refreshLoadedMetaItems();
-        } else {
-            foreach ($key as $keyItem => $keyItemValue) {
-                $currentMetaItem[$keyItem] = $currentMetaItem[$keyItem]->first();
-                $currentMetaItem[$keyItem]->type = $types[$keyItem];
-                $currentMetaItem[$keyItem]->value = $keyItemValue;
-                $currentMetaItem[$keyItem]->save();
-            }
-            foreach ($key as $keyItem => $keyItemValue) {
-                $singleUpdatedMeta = $this->getLoadedMeta()->where('id', $currentMetaItem[$keyItem]->id)->first();
-                $singleUpdatedMeta->type = $types[$keyItem];
-                $singleUpdatedMeta->value = $keyItemValue;
-            }
-            $this->refreshLoadedMetaItems();
-        }
-        return true;
-
-    }
-
-    /**
-     * create new meta actions . return false if meta with this features already exists
-     * note : $key value can not be array in this method
-     *
-     * @param string $key <p> key of meta </p>
-     * @param mixed $value
-     * @param $type <p>this type must be const from Meta class </p>
+     * @param $key
+     * @param null $value
      * @return bool
      */
-    private function creatingMetaAction($key, $value, $type)
+    public function setMultipleMeta($key, $value = null)
     {
-        if (!is_string($key) && !is_array($key)) {
+        if (!is_array($key)) {
             return false;
         }
-        $keyIsArray = false;
-
-        // check if meta already exists
-        if (is_array($key)) {
-            $keyIsArray = true;
-            $currentMetaItem = [];
-            foreach ($key as $keyItem => $keyItemValue) {
-                if (!is_string($keyItem) || is_int($keyItem)) {
-                    return false;
-                }
-                $currentMetaItem[$keyItem] = $this->getLoadedMeta()->where('key', $keyItem);
-                if ($currentMetaItem[$keyItem]->count()) { // if meta not founded
-                    return false;
-                }
-            }
-        } else {
-            $currentMeta = $this->getLoadedMeta()->where('key', $key);
-            if ($currentMeta->count()) { // if meta not founded
+        $results = [];
+        foreach ($key as $keyItem => $valueItem) {
+            $results[] = $this->setMeta($keyItem, $valueItem, $value);
+        }
+        foreach ($results as $result) {
+            if ($result === false) {
                 return false;
             }
-        }
-
-        //determine types
-        $types = [];
-        if ($type === null && $keyIsArray == false) {
-            $type = Meta::guessType($value);
-            if ($type == Meta::META_TYPE_COLLECTION || $type == Meta::META_TYPE_ARRAY || $type == Meta::META_TYPE_JSON) {
-                $type = Meta::META_TYPE_COLLECTION;
-            }
-        } elseif ($keyIsArray == true) {
-            foreach ($key as $keyItem => $keyItemValue) {
-                if ($value === null) {
-                    $thisItemType = Meta::guessType($keyItemValue);
-                    if ($thisItemType == Meta::META_TYPE_COLLECTION || $thisItemType == Meta::META_TYPE_ARRAY || $thisItemType == Meta::META_TYPE_JSON) {
-                        $thisItemType = Meta::META_TYPE_COLLECTION;
-                    }
-                    $types[$keyItem] = $thisItemType;
-                } else {
-                    $types[$keyItem] = $value;
-                }
-            }
-        }
-
-        //convert arrays and json's to collection
-        if ($keyIsArray == true) {
-            foreach ($key as $keyItem => $keyItemValue) {
-                if ($types[$keyItem] == Meta::META_TYPE_COLLECTION || $types[$keyItem] == Meta::META_TYPE_ARRAY || $types[$keyItem] == Meta::META_TYPE_JSON) {
-                    $key[$keyItem] = Meta::convertMetaValueToType($keyItemValue, Meta::META_TYPE_JSON);
-                } else {
-                    $key[$keyItem] = Meta::convertMetaValueToType($keyItemValue, $types[$keyItem]);
-                }
-            }
-        } else {
-            if ($type == Meta::META_TYPE_COLLECTION || $type == Meta::META_TYPE_ARRAY || $type == Meta::META_TYPE_JSON) {
-                $value = Meta::convertMetaValueToType($value, Meta::META_TYPE_JSON);
-            } else {
-                $value = Meta::convertMetaValueToType($value, $type);
-            }
-        }
-
-        if ($keyIsArray == false) {
-            $newMeta = new \Zoha\Meta\Models\Meta;
-            $newMeta->status = true;
-            $newMeta->type = $type;
-            $newMeta->key = $key;
-            $newMeta->value = $value;
-            $this->meta()->save($newMeta);
-            $this->getLoadedMeta()->add($newMeta);
-            $this->refreshLoadedMetaItems();
-        } else {
-            $currentMetaItem = [];
-            foreach ($key as $keyItem => $keyItemValue) {
-                $currentMetaItemTemporary = new \Zoha\Meta\Models\Meta;
-                $currentMetaItemTemporary->status = true;
-                $currentMetaItemTemporary->type = $types[$keyItem];
-                $currentMetaItemTemporary->key = $keyItem;
-                $currentMetaItemTemporary->value = $keyItemValue;
-                $currentMetaItem[] = $currentMetaItemTemporary;
-            }
-            $this->meta()->saveMany($currentMetaItem);
-            foreach ($currentMetaItem as $singleCreatedMetaItem) {
-                $this->getLoadedMeta()->add($singleCreatedMetaItem);
-            }
-            $this->refreshLoadedMetaItems();
         }
         return true;
     }
@@ -294,7 +112,7 @@ trait SetMeta
      */
     public function addMeta($key, $value = null, $type = null)
     {
-        return $this->creatingMetaAction($key, $value, $type);
+        return CreateMetaHelper::createMeta($this, $key, $value, $type);
     }
 
     /**
@@ -306,8 +124,8 @@ trait SetMeta
      */
     public function increaseMeta($key, $increaseStep = 1)
     {
-        $currentValue = $this->getMeta($key, '00');
-        if ($currentValue === '00') {
+        $currentValue = $this->getMeta($key, '000');
+        if ($currentValue === '000') {
             return $this->createMeta($key, 0);
         } elseif (is_int($currentValue)) {
             $currentValue += $increaseStep;
@@ -325,8 +143,8 @@ trait SetMeta
      */
     public function decreaseMeta($key, $decreaseStep = 1)
     {
-        $currentValue = $this->getMeta($key, '00');
-        if ($currentValue === '00') {
+        $currentValue = $this->getMeta($key, '000');
+        if ($currentValue === '000') {
             return $this->createMeta($key, 0, Meta::META_TYPE_INTEGER);
         } elseif (is_int($currentValue)) {
             $currentValue -= $decreaseStep;

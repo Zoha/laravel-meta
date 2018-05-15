@@ -86,11 +86,7 @@ trait MetableBase
     public function getLoadedMeta()
     {
         if ($this->loadedMeta == null) {
-            if (property_exists($this, 'meta')) {
-                $this->loadedMeta = $this->meta;
-            } else {
-                $this->loadedMeta = $this->metarelation;
-            }
+            $this->loadedMeta = $this->metarelation;
         }
         return $this->loadedMeta;
 

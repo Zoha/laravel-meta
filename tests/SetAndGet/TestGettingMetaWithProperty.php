@@ -60,4 +60,13 @@ class TestGettingMetaWithProperty extends TestingHelpers
         $this->assertEquals(true, $value);
         $this->assertTrue(is_bool($value));
     }
+
+    public function test_search_proper_name_by_get_meta_with_property()
+    {
+        $this->model->setMeta('test key' , 6);
+        $this->assertEquals(6 , $this->model->meta->test_key);
+
+        $this->model->setMeta('test-key2' , 10);
+        $this->assertEquals(10 , $this->model->meta->test_key2);
+    }
 }

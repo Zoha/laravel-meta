@@ -12,5 +12,5 @@ use Zoha\Meta\Traits\SetMeta;
 
 trait Metable
 {
-    use MetableBase , GetMeta , SetMeta , DeleteMeta , MetaClauses;
+    use MetableBase, GetMeta, SetMeta, DeleteMeta, MetaClauses;
 }
