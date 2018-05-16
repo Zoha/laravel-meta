@@ -31,6 +31,7 @@ a laravel package for working with meta !
 6. [Other Methods And Features](#other-methods-and-features)
     * [Notes](#notes)
     * [Data Type](#data-type)
+    * [Custom Meta Table](#custom-meta-table)
     * [Meta Model](#meta-model)
     * [Meta Table](#meta-table)
 7. [License](#license)
@@ -93,6 +94,15 @@ class Post extends Model
     ...
 }
 ```
+##### Optional Section
+
+You can publish meta config file using this command :
+```
+ $ php artisan vendor:publish --provider="Zoha\Meta\MetaServiceProvider" --tag=config
+```
+In this file you can change default meta table ( default: meta )
+Or you can [customize meta table for a specific model](#custom-meta-table)
+
 That's it! Now you can use all of the Laravel meta features
 > In all of the examples below, we assume that the $post is set to Post::first() which Post model is an example model
 
@@ -384,6 +394,50 @@ $post->getMeta('key' , 'null'); // "[1,2,3]" (string)
 $post->getMeta('key' , 'null' , 'array'); // [1,2,3] (array)
 $post->getMeta('key' , 'null' , 'boolean'); // true (boolean)
 ```
+### Custom Meta Table
+By default, all meta-data for all models will be stored in the `meta` database table.
+But if you want, you can use a separate table for a particular model.
+
+For example, you have `Post`, `Comment` and `User` models
+You want to store all users and comments meta in default table but the user's meta tags are in a special table
+To do this you have to take four steps :
+
+First Step : you should publish package config file using this command : 
+```
+$ php artisan vendor:publish --provider="Zoha\Meta\MetaServiceProvider" --tag=config
+```
+This command will place a file named `meta.php` in your config folder
+
+Second Step : open config file in `tables` array you find a custom array . in this array you can add new tables name . 
+for our example we add `users_meta` in this array to handle users meta : 
+```PHP
+'tables' => [
+    'default' => 'meta',
+    'custom'  => [
+        'users_meta'
+    ],
+]
+```
+
+Third Step : you need to run migrate command to create new table .
+```
+$ php artisan migrate 
+```
+If you have already migrated Meta migration, you should rollback this migrations and migrate it again ( to create new tables ) 
+
+Final Step : now that the new table is made, you can introduce it to the `User` model (or any model you want) to handle its meta with this table . like this :
+```PHP
+use Illuminate\Foundation\Auth\User as Authenticatable;
+class User extends Authenticatable
+{
+    use \Zoha\Metable;
+    
+    protected $metaTable = 'users_meta';
+}
+
+```
+
+
 ### Meta Model 
 you are free to use meta model in your project
 ```PHP

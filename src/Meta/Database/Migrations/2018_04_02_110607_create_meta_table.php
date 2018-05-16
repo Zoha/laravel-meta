@@ -28,7 +28,7 @@ class CreateMetaTable extends Migration
             $table->timestamps();
         });
         if (!is_null(config('meta.tables.custom')) && is_array(config('meta.tables.custom'))) {
-            foreach (config('meta.tables.custom') as $customTable => $relatedClass) {
+            foreach (config('meta.tables.custom') as $customTable) {
                 Schema::create($customTable, function (Blueprint $table) {
                     $table->charset = 'utf8';
                     $table->collation = 'utf8_unicode_ci';
@@ -55,7 +55,7 @@ class CreateMetaTable extends Migration
     {
         Schema::dropIfExists(config('meta.tables.default', 'meta'));
         if (!is_null(config('meta.tables.custom')) && is_array(config('meta.tables.custom'))) {
-            foreach (config('meta.tables.custom') as $customTable => $relatedClass) {
+            foreach (config('meta.tables.custom') as $customTable) {
                 Schema::dropIfExists($customTable);
             }
         }

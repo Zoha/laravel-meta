@@ -4,7 +4,7 @@ return [
 
     /*
      * ---------------------------------------
-     * tables list
+     * Tables List
      * ---------------------------------------
      *
      * by default all meta data will be stored in meta table.
@@ -16,11 +16,19 @@ return [
      * model using `metaTable` property
      *
      */
+
     'tables' => [
 
+        // default table for all models
+
         'default' => 'meta',
+
+        // custom tables list
+
         'custom'  => [
-            //'posts_meta' , 'users_meta'
+
+            // example : 'posts_meta' , 'users_meta'
+
         ],
     ]
 ];

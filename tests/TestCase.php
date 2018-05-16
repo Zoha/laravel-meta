@@ -49,9 +49,10 @@ class TestCase extends \Orchestra\Testbench\TestCase
     protected function setUp()
     {
         parent::setUp();
+        $this->app['config']->set('meta' , include(__DIR__.'/../src/Meta/Config/meta.php'));
         $this->loadLaravelMigrations(['--database' => 'laravelmeta']);
-        $this->loadMigrationsFrom(__DIR__ . '/../database/TestCaseMigrations');
-        $this->withFactories(__DIR__ . '/../database/Factories');
+        $this->loadMigrationsFrom(__DIR__ . '/../src/Meta/database/TestCaseMigrations');
+        $this->withFactories(__DIR__ . '/../src/Meta/database/Factories');
         $this->artisan('migrate', ['--database' => 'laravelmeta']);
     }
 

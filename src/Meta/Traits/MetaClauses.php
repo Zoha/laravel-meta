@@ -427,7 +427,8 @@ trait MetaClauses
     public function scopeOrderByMeta($query, $key, $direction = 'asc')
     {
         $this->countOfMetaJoins += 1;
-        return $query->leftJoin('meta as meta' . $this->countOfMetaJoins, function ($q) use ($key) {
+        $table = $this->getMetaTable();
+        return $query->leftJoin($table.' as meta' . $this->countOfMetaJoins, function ($q) use ($key) {
             $q->on('meta' . $this->countOfMetaJoins . '.owner_id', '=', $this->getTable() . ".id");
             $q->where('meta' . $this->countOfMetaJoins . '.owner_type', '=', static::class);
             $q->where('meta' . $this->countOfMetaJoins . '.key', $key);

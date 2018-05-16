@@ -51,7 +51,11 @@ trait MetableBase
         if ($key !== null) {
             return $this->processMetaRequest($key, $value, $type);
         }
-        return $this->morphMany('Zoha\Meta\Models\Meta', 'owner');
+        $instance = new \Zoha\Meta\Models\Meta();
+        $instance->setTable($this->getMetaTable());
+        list($type, $id) = $this->getMorphs('owner', null, null);
+        $table = $instance->getTable();
+        return $this->newMorphMany($instance->newQuery(), $this, $table.'.'.$type, $table.'.'.$id, $this->getKeyName());
     }
 
     /**
@@ -61,7 +65,29 @@ trait MetableBase
      */
     public function metarelation()
     {
-        return $this->morphMany('Zoha\Meta\Models\Meta', 'owner');
+        $instance = new \Zoha\Meta\Models\Meta();
+        $instance->setTable($this->getMetaTable());
+        list($type, $id) = $this->getMorphs('owner', null, null);
+        $table = $instance->getTable();
+        return $this->newMorphMany($instance->newQuery(), $this, $table.'.'.$type, $table.'.'.$id, $this->getKeyName());
+    }
+
+    /**
+     * get meta table name
+     * 
+     * @return string
+     */
+    public function getMetaTable()
+    {
+        if(is_null(config('meta.tables.default'))){
+            return 'meta';
+        }else{
+            if($this->metaTable){
+                return $this->metaTable;
+            }else{
+                return config('meta.tables.default');
+            }
+        }
     }
 
     /**

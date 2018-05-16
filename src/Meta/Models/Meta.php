@@ -23,7 +23,7 @@ class Meta extends Model
     ];
 
     //------------------------------------------ Methods --------------------------------------------//
-    
+
     /**
      * morphTo relation with other models
      *
@@ -32,5 +32,16 @@ class Meta extends Model
     public function owner()
     {
         return $this->morphTo();
+    }
+
+    public function getMetaTableName()
+    {
+        return $this->table;
+    }
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->setTable(config('meta.tables.default' , 'meta'));
     }
 }
