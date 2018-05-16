@@ -5,10 +5,6 @@ namespace Zoha\Meta;
 
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Database\Eloquent\Factory as EloquentFactory;
-use Faker\Generator as Faker;
-use Zoha\Meta\Helpers\MetaHelper;
-use Zoha\Meta\Helpers\MetaInterface;
 
 class MetaServiceProvider extends ServiceProvider
 {
@@ -28,9 +24,7 @@ class MetaServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('meta', function () {
-            return new MetaInterface();
-        });
+
     }
 
     /**

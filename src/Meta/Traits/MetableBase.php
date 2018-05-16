@@ -7,6 +7,7 @@ namespace Zoha\Meta\Traits;
 use Zoha\Meta\Helpers\MetaHelper as Meta;
 use Zoha\Meta\Helpers\MetaCollection;
 use Illuminate\Database\Eloquent\Collection;
+use Zoha\Meta\Models\NewClassForTest;
 
 trait MetableBase
 {

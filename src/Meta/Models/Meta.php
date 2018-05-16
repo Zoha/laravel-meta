@@ -23,7 +23,7 @@ class Meta extends Model
     ];
 
     //------------------------------------------ Methods --------------------------------------------//
-
+    
     /**
      * morphTo relation with other models
      *

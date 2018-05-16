@@ -60,7 +60,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
     public function test_connection_and_migrations()
     {
         $tableUsersExists = Schema::hasTable('model');
-        $tableMetaExists = Schema::hasTable('meta');
+        $tableMetaExists = Schema::hasTable(config('meta.tables.default' , 'meta'));
 
         $this->assertTrue($tableUsersExists);
         $this->assertTrue($tableMetaExists);

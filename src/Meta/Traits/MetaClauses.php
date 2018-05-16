@@ -424,19 +424,20 @@ trait MetaClauses
      * @param string $direction
      * @return Builder
      */
-    public function scopeOrderByMeta($query , $key , $direction = 'asc'){
+    public function scopeOrderByMeta($query, $key, $direction = 'asc')
+    {
         $this->countOfMetaJoins += 1;
-        return $query->leftJoin('meta as meta'.$this->countOfMetaJoins, function ($q) use($key) {
-            $q->on('meta'.$this->countOfMetaJoins.'.owner_id', '=', $this->getTable().".id");
-            $q->where('meta'.$this->countOfMetaJoins.'.owner_type', '=', static::class);
-            $q->where('meta'.$this->countOfMetaJoins.'.key', $key);
+        return $query->leftJoin('meta as meta' . $this->countOfMetaJoins, function ($q) use ($key) {
+            $q->on('meta' . $this->countOfMetaJoins . '.owner_id', '=', $this->getTable() . ".id");
+            $q->where('meta' . $this->countOfMetaJoins . '.owner_type', '=', static::class);
+            $q->where('meta' . $this->countOfMetaJoins . '.key', $key);
         })
-            ->orderByRaw("CASE (meta".$this->countOfMetaJoins.".key)
+            ->orderByRaw("CASE (meta" . $this->countOfMetaJoins . ".key)
               WHEN '$key' THEN 1
               ELSE 0
               END
               DESC")
-            ->orderBy('meta'.$this->countOfMetaJoins.'.value', strtoupper($direction))
-            ->select($this->getTable().".*");
+            ->orderBy('meta' . $this->countOfMetaJoins . '.value', strtoupper($direction))
+            ->select($this->getTable() . ".*");
     }
 }
