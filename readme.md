@@ -58,7 +58,7 @@ First , Require this package with composer
  $ composer require zoha/laravel-meta
 ```
 If you Use Laravel <= 5.4 add the ServiceProvider and Alias in config/app.php 
-```
+```PHP
 'providers' => [
     ...
     Zoha\Meta\MetaServiceProvider::class,
