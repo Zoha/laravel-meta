@@ -37,6 +37,7 @@ a laravel package for working with meta !
 7. [License](#license)
 # Introduction
 ![gif-gile](https://raw.githubusercontent.com/ZohaBanam/laravel-meta/master/meta-package-gif.gif)
+
 Sometimes our models in laravel needs a lot of information that should be stored in the database.
 For example, Suppose you want to create a blog and add a model for posts on this blog.
 The most important information that this model will need is its title and content.
