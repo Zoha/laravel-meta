@@ -402,7 +402,8 @@ By default, all meta-data for all models will be stored in the `meta` database t
 But if you want, you can use a separate table for a particular model.
 
 For example, you have `Post`, `Comment` and `User` models
-You want to store all users and comments meta in default table but the user's meta tags are in a special table
+
+You want to store all posts and comments meta in default table but the user's meta tags are in a special table
 To do this you have to take four steps :
 
 First Step : you should publish package config file using this command : 
