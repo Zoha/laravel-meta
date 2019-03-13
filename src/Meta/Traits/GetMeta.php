@@ -40,7 +40,7 @@ trait GetMeta
     public function getMetas() {
         return $this->getLoadedMeta()
                     ->mapWithKeys(function ($item) {
-                        return [$item->key => MetaHelper::returnValue($this->getLoadedMeta(), $item->key)];
+                        return [$item->key => Meta::returnValue($this->getLoadedMeta(), $item->key)];
                     });
 
     }
