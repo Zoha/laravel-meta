@@ -33,15 +33,13 @@ trait GetMeta
     }
 
     /**
-     * get all metas's value and format the value 
-     * 
+     * get all metas's value and format the value
+     *
      * @return mixed
      */
     public function getMetas() {
-        return $this->getLoadedMeta()
-                    ->mapWithKeys(function ($item) {
-                        return [$item->key => MetaHelper::returnValue($this->getLoadedMeta(), $item->key)];
-                    });
-
+        return $this->getLoadedMeta()->toBase()->mapWithKeys(function ($item) {
+                return [$item->key => Meta::returnValue($this->getLoadedMeta(), $item->key)];
+            });
     }
 }
