@@ -14,7 +14,7 @@ class TestWhereMetaBetweenMethod extends TestingHelpers
      *
      * @return void
      */
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
         $this->modelTruncate();

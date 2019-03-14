@@ -18,6 +18,7 @@ a laravel package for working with meta !
     * [Update Meta](#update-meta)
     * [Create Or Update Meta](#create-or-update-meta)
     * [Get Meta](#get-meta)
+    * [Get Metas](#get-metas)
     * [Delete Meta](#delete-meta)
     * [Check Meta Exists Or Not](#check-meta-exists-or-not)
     * [Increase Meta](#increase-meta)
@@ -167,6 +168,17 @@ $post->getMeta('key');
 
 // return value or 'default value ' if not exists or value is null
 $post->getMeta('key' , 'default value') ; 
+```
+Also you can get meta values using **meta property** : 
+```PHP
+$post->meta->key; // return meta value 
+```
+### Get Metas
+`getMetas` method will return all metas as a collection : 
+```PHP
+// return a collection of all metas for this model
+// no meta yet ? -> empty collection
+$post->getMetas() ; 
 ```
 Also you can get meta values using **meta property** : 
 ```PHP

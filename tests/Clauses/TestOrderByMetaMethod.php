@@ -9,7 +9,7 @@ use Zoha\Meta\Tests\TestingHelpers;
 
 class TestOrderByMetaMethod extends TestingHelpers
 {
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
         $this->modelTruncate();

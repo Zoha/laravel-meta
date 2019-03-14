@@ -17,7 +17,7 @@ class TestTruncateMetaMethod extends TestingHelpers
 
     //------------------------------------------ Methods --------------------------------------------//
 
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
         $this->modelTruncate();

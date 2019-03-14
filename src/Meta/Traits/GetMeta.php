@@ -16,7 +16,8 @@ trait GetMeta
      *
      * @return mixed
      */
-    public function getMeta($key, $defaultValue = Meta::NO_VALUE_FOR_PARAMETER, $customType = null) {
+    public function getMeta($key, $defaultValue = Meta::NO_VALUE_FOR_PARAMETER, $customType = null)
+    {
         if (!is_string($key)) {
             return $defaultValue;
         }
@@ -37,9 +38,10 @@ trait GetMeta
      *
      * @return mixed
      */
-    public function getMetas() {
+    public function getMetas()
+    {
         return $this->getLoadedMeta()->toBase()->mapWithKeys(function ($item) {
-                return [$item->key => Meta::returnValue($this->getLoadedMeta(), $item->key)];
-            });
+            return [$item->key => Meta::returnValue($this->getLoadedMeta(), $item->key)];
+        });
     }
 }
