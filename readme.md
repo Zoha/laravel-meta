@@ -180,10 +180,6 @@ $post->meta->key; // return meta value
 // no meta yet ? -> empty collection
 $post->getMetas() ; 
 ```
-Also you can get meta values using **meta property** : 
-```PHP
-$post->meta->key; // return meta value 
-```
 ### Delete Meta
 For delete meta use `deleteMeta`  method 
 ```PHP
