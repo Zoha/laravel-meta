@@ -28,7 +28,9 @@ trait MetableBase
     public static function bootMetableBase()
     {
         static::deleted(function ($modelItem) {
-            \Zoha\Meta\Models\Meta::where('owner_type', static::class)->where('owner_id', $modelItem->id)->delete();
+            if (! method_exists($modelItem, 'bootSoftDeletes') || (method_exists($modelItem, 'bootSoftDeletes') && $modelItem->isForceDeleting())) {
+                \Zoha\Meta\Models\Meta::where('owner_type', static::class)->where('owner_id', $modelItem->id)->delete();
+            }
         });
     }
 
