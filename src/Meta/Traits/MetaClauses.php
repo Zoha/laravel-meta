@@ -55,9 +55,10 @@ trait MetaClauses
                 if (!is_array($conditionGroup)) { // if conditions are just key and value
                     $query = call_user_func_array(
                         [$this, 'scopeWhereMeta'],
-                        [$query, $conditionKey, '=', $conditionGroup, $orWhere]);
+                        [$query, $conditionKey, '=', $conditionGroup, $orWhere]
+                    );
                 } else {
-                    $conditionGroup = array_prepend($conditionGroup, $query);
+                    array_unshift($conditionGroup, $query);
                     if (count($conditionGroup) == 2) {
                         $conditionGroup[] = Meta::NO_VALUE_FOR_PARAMETER;
                         $conditionGroup[] = Meta::NO_VALUE_FOR_PARAMETER;
@@ -428,7 +429,7 @@ trait MetaClauses
     {
         $this->countOfMetaJoins += 1;
         $table = $this->getMetaTable();
-        return $query->leftJoin($table.' as meta' . $this->countOfMetaJoins, function ($q) use ($key) {
+        return $query->leftJoin($table . ' as meta' . $this->countOfMetaJoins, function ($q) use ($key) {
             $q->on('meta' . $this->countOfMetaJoins . '.owner_id', '=', $this->getTable() . ".id");
             $q->where('meta' . $this->countOfMetaJoins . '.owner_type', '=', static::class);
             $q->where('meta' . $this->countOfMetaJoins . '.key', $key);
