@@ -1,46 +1,52 @@
 {
-    "name": "zoha/laravel-meta",
-    "description": "a package for working with models meta",
-    "keywords": ["meta" , "laravel" , "data" , "package"],
-    "type": "package",
-    "license": "MIT",
-	"source": {
-        "url": "https://github.com/ZohaBanam/laravel-meta.git",
-        "type": "git",
-		"reference": "0ac3f7b"
-    },
-    "require": {
-        "illuminate/support": "^5.8|^6.0|^7.0|^8.0",
-        "illuminate/database": "^5.8|^6.0|^7.0|^8.0"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^7.0",
-        "orchestra/testbench": "~3.5"
-    },
-    "authors": [
-        {
-            "name": "Zoha Banam",
-            "email": "zoha.banam@gmail.com"
-        }
-    ],
-    "autoload":{
-        "psr-4":{
-            "Zoha\\" : "src/"
-        }
-    },
-    "autoload-dev":{
-        "psr-4" : {
-            "Zoha\\Meta\\Tests\\" : "tests/"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Zoha\\Meta\\MetaServiceProvider"
-            ],
-            "aliases": {
-                "Meta": "Zoha\\Meta\\Facades\\MetaFacade"
-            }
-        }
+  "name": "zoha/laravel-meta",
+  "description": "a package for working with models meta",
+  "keywords": [
+    "meta",
+    "laravel",
+    "data",
+    "package"
+  ],
+  "type": "package",
+  "license": "MIT",
+  "source": {
+    "url": "https://github.com/ZohaBanam/laravel-meta.git",
+    "type": "git",
+    "reference": "0ac3f7b"
+  },
+  "require": {
+    "illuminate/support": "^5.8|^6.0|^7.0|^8.0",
+    "illuminate/database": "^5.8|^6.0|^7.0|^8.0",
+    "laravel/legacy-factories": "^1.1"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.5",
+    "orchestra/testbench": "~6.23"
+  },
+  "authors": [
+    {
+      "name": "Zoha Banam",
+      "email": "zoha.banam@gmail.com"
     }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Zoha\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Zoha\\Meta\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Zoha\\Meta\\MetaServiceProvider"
+      ],
+      "aliases": {
+        "Meta": "Zoha\\Meta\\Facades\\MetaFacade"
+      }
+    }
+  }
 }
