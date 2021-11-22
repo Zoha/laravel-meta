@@ -4,7 +4,6 @@ a laravel package for working with meta !
 <p align="center">
    <img src="https://raw.githubusercontent.com/ZohaBanam/files/master/larave-meta/images/victor.jpg" alt="Package Image" ><br>
    <a href="http://choosealicense.com/licenses/mit/" > <img src="https://img.shields.io/apm/l/vim-mode.svg" alt="Packagist License" > </a> 
-   <img src="https://img.shields.io/php-eye/symfony/symfony.svg" alt="Test Version" >
    <img src="https://img.shields.io/badge/stable-v1.3-green.svg" alt="Stable Version" >
    <img src="https://img.shields.io/badge/package-Laravel-red.svg" alt="Laravel Package" >
 </p>
