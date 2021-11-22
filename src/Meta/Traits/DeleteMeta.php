@@ -27,8 +27,9 @@ trait DeleteMeta
         $this->loadedMeta = $this->getLoadedMeta()->reject(function ($value) use ($currentMeta) {
             return $value->id === $currentMeta->id;
         });
+        $currentMeta->delete();
+        
         $this->refreshLoadedMetaItems();
-        \Zoha\Meta\Models\Meta::destroy($currentMeta->id);
         return true;
     }
 
@@ -50,7 +51,9 @@ trait DeleteMeta
      */
     public function truncateMeta()
     {
-        \Zoha\Meta\Models\Meta::destroy($this->getLoadedMeta()->pluck('id')->toArray());
+        foreach ($this->getLoadedMeta() as $meta) {
+            $meta->delete();
+        }
         $this->loadedMeta = new Collection([]);
         return true;
     }
