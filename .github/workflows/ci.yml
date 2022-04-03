@@ -13,8 +13,8 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php: [8.1]
-        laravel: [9]
+        php: [7.4.3]
+        laravel: [6]
 
     steps:
       - name: Checkout code
