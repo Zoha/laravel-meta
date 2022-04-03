@@ -1,0 +1,19 @@
+name: Laravel meta package CI
+
+on:
+  push:
+    branches: [master, dev]
+  pull_request:
+    branches: [master]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: setup php and composer, and install dependencies
+        uses: php-actions/composer@v6
+      - name: run tests
+        run: ./vendor/bin/phpunit
+        env:
+          CI: true
