@@ -22,9 +22,9 @@
 
     <testsuites>
 
-        <testsuite name="Laravel Meta Test By Zoha Banam">
+        <testsuite name="Laravel Meta Test">
 
-            <directory suffix=".php">tests</directory>
+            <directory suffix=".php">./tests</directory>
 
         </testsuite>
 
