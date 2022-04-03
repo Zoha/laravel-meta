@@ -15,8 +15,8 @@
     "reference": "0ac3f7b"
   },
   "require": {
-    "illuminate/support": "^5.8|^6.0|^7.0|^8.0",
-    "illuminate/database": "^5.8|^6.0|^7.0|^8.0",
+    "illuminate/support": "^5.8|^6.0|^7.0|^8.0|^9.0",
+    "illuminate/database": "^5.8|^6.0|^7.0|^8.0||^9.0",
     "laravel/legacy-factories": "^1.1"
   },
   "require-dev": {
