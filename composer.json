@@ -16,12 +16,10 @@
   },
   "require": {
     "illuminate/support": "^6.0|^7.0|^8.0|^9.0",
-    "illuminate/database": "^6.0|^7.0|^8.0|^9.0",
-    "laravel/legacy-factories": "^1.3"
+    "illuminate/database": "^6.0|^7.0|^8.0|^9.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "^9.5",
-    "orchestra/testbench": "^7.3"
+    "phpunit/phpunit": "^9.5"
   },
   "authors": [
     {
