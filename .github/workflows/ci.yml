@@ -14,12 +14,12 @@ jobs:
       fail-fast: true
       matrix:
         php: [7.3, 7.4, "8.0", 8.1]
-        laravel: [8, "9.6"]
+        laravel: [8, 9]
         exclude:
           - php: 7.3
-            laravel: "9.6"
+            laravel: 9
           - php: 7.4
-            laravel: "9.6"
+            laravel: 9
 
     steps:
       - name: Checkout code
@@ -33,7 +33,7 @@ jobs:
           coverage: none
       - name: Install dependencies
         run: |
-          composer require "laravel/framework":"^${{ matrix.laravel }}" 
+          composer require "laravel/framework":"^${{ matrix.laravel }}"  --with-all-dependencies 
           composer update --prefer-dist --no-interaction --no-progress --ignore-platform-reqs
       - name: Execute tests
         run: vendor/bin/phpunit --verbose
