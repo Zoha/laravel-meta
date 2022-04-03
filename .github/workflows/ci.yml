@@ -9,11 +9,30 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: true
+      matrix:
+        php: [7.3, 7.4, "8.0", 8.1]
+        laravel: [8, 9]
+        exclude:
+          - php: 7.3
+            laravel: 9
+          - php: 7.4
+            laravel: 9
+
     steps:
-      - uses: actions/checkout@v2
-      - name: setup php and composer, and install dependencies
-        uses: php-actions/composer@v6
-      - name: run tests
-        run: ./vendor/bin/phpunit
-        env:
-          CI: true
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: dom, curl, libxml, mbstring, zip
+          tools: composer:v2
+          coverage: none
+      - name: Install dependencies
+        run: |
+          composer update --prefer-dist --no-interaction --no-progress
+      - name: Execute tests
+        run: vendor/bin/phpunit --verbose
