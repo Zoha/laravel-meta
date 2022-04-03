@@ -36,6 +36,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
     {
         $currentPath = dirname(__FILE__);
         $databasePath = getenv("DATABASE_PATH") ? $currentPath . '/' . getenv("DATABASE_PATH") : ":memory:";
+        dd($databasePath);
         $app['config']->set('database.default', 'laravelmeta');
         $app['config']->set('database.connections.laravelmeta', [
             'driver'   => 'sqlite',
