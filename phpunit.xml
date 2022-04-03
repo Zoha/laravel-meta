@@ -16,9 +16,7 @@
 
          processIsolation="false"
 
-         stopOnFailure="false"
-
-         syntaxCheck="false">
+         stopOnFailure="false">
 
     <testsuites>
 
