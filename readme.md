@@ -2,14 +2,16 @@
 
 a laravel package for working with meta !
 
-<p align="center">
-<img src="https://raw.githubusercontent.com/Zoha/files/master/larave-meta/images/cover%20image.jpg" alt="Package Image" >
-[![Zoha - laravel-meta](https://img.shields.io/static/v1?label=Zoha&message=laravel-meta&color=blue&logo=github)](https://github.com/Zoha/laravel-meta "Go to GitHub repo")
+<div align="center">
+
+[![Package Image](https://raw.githubusercontent.com/Zoha/files/master/larave-meta/images/cover%20image.jpg)](https://github.com/Zoha/laravel-meta "Go to GitHub repo")
+   
+[![Zoha - laravel-meta](https://img.shields.io/static/v1?label=Zoha&message=laravel-meta&color=red&logo=github)](https://github.com/Zoha/laravel-meta "Go to GitHub repo")
 [![stars - laravel-meta](https://img.shields.io/github/stars/Zoha/laravel-meta?style=social)](https://github.com/Zoha/laravel-meta)
 [![forks - laravel-meta](https://img.shields.io/github/forks/Zoha/laravel-meta?style=social)](https://github.com/Zoha/laravel-meta)
-[![GitHub tag](https://img.shields.io/github/tag/Zoha/laravel-meta?include_prereleases=&sort=semver&color=blue)](https://github.com/Zoha/laravel-meta/releases/)
+[![GitHub tag](https://img.shields.io/github/tag/Zoha/laravel-meta?include_prereleases=&sort=semver&color=cyan)](https://github.com/Zoha/laravel-meta/releases/)
 [![License](https://img.shields.io/badge/License-MIT-blue)](#license)
-</p>
+</div>
 
 # Page Contents
 
