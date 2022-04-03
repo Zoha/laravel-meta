@@ -33,7 +33,7 @@ jobs:
           coverage: none
       - name: Install dependencies
         run: |
-          composer require "illuminate/support=^${{ matrix.laravel }}"  "illuminate/database=^${{ matrix.laravel }}" 
-          composer update --prefer-dist --no-interaction --no-progress
+          composer require "illuminate/support=^${{ matrix.laravel }}"  "illuminate/database=^${{ matrix.laravel }}" --ignore-platform-reqs
+          composer update --prefer-dist --no-interaction --no-progress --ignore-platform-reqs
       - name: Execute tests
         run: vendor/bin/phpunit --verbose
