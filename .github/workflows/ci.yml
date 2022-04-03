@@ -14,7 +14,7 @@ jobs:
       fail-fast: true
       matrix:
         php: [7.3, 7.4]
-        laravel: [6]
+        laravel: [8]
         exclude:
           - php: 7.3
             laravel: 9
@@ -32,10 +32,7 @@ jobs:
           tools: composer:v2
           coverage: none
       - name: remove composer lock file
-        run: rm -rf composer.lock
-      - name: Install dependencies
         run: |
-          composer require "laravel/framework":"^${{ matrix.laravel }}"  --with-all-dependencies 
           composer update --prefer-dist --no-interaction --no-progress --ignore-platform-reqs
       - name: Execute tests
         run: vendor/bin/phpunit --verbose
