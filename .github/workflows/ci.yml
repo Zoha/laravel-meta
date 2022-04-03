@@ -31,6 +31,8 @@ jobs:
           extensions: dom, curl, libxml, mbstring, zip
           tools: composer:v2
           coverage: none
+      - name: remove composer lock file
+        run: rm -rf composer.lock
       - name: Install dependencies
         run: |
           composer require "laravel/framework":"^${{ matrix.laravel }}"  --with-all-dependencies 
