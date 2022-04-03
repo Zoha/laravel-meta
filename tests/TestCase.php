@@ -34,13 +34,10 @@ class TestCase extends \Orchestra\Testbench\TestCase
      */
     protected function getEnvironmentSetUp($app)
     {
-        $currentPath = dirname(__FILE__);
-        $databasePath = getenv("DATABASE_PATH") ? $currentPath . '/' . getenv("DATABASE_PATH") : ":memory:";
-        dd($databasePath);
         $app['config']->set('database.default', 'laravelmeta');
         $app['config']->set('database.connections.laravelmeta', [
             'driver'   => 'sqlite',
-            'database' => $databasePath,
+            'database' => ':memory:',
             'prefix'   => '',
         ]);
     }
@@ -55,8 +52,8 @@ class TestCase extends \Orchestra\Testbench\TestCase
         parent::setUp();
         $this->app['config']->set('meta', include(__DIR__ . '/../src/Meta/Config/meta.php'));
         $this->loadLaravelMigrations(['--database' => 'laravelmeta']);
-        $this->loadMigrationsFrom(__DIR__ . '/../src/Meta/database/TestCaseMigrations');
-        $this->withFactories(__DIR__ . '/../src/Meta/database/Factories');
+        $this->loadMigrationsFrom(__DIR__ . '/../src/Meta/Database/TestCaseMigrations');
+        $this->withFactories(__DIR__ . '/../src/Meta/Database/Factories');
         $this->artisan('migrate', ['--database' => 'laravelmeta']);
     }
 

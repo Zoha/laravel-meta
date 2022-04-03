@@ -29,10 +29,5 @@ jobs:
       - name: Install dependencies
         run: |
           composer update --prefer-dist --no-interaction --no-progress
-      - name: Create temp database
-        run: |
-          touch database.sqlite
       - name: Execute tests
         run: vendor/bin/phpunit --verbose
-        env:
-          DATABASE_PATH: "../database.sqlite"
