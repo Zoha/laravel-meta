@@ -15,13 +15,13 @@
     "reference": "0ac3f7b"
   },
   "require": {
-    "illuminate/support": "^5.8|^6.0|^7.0|^8.0|^9.0",
-    "illuminate/database": "^5.8|^6.0|^7.0|^8.0|^9.0",
+    "illuminate/support": "^6.0|^7.0|^8.0|^9.0",
+    "illuminate/database": "^6.0|^7.0|^8.0|^9.0",
     "laravel/legacy-factories": "^1.3"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.5",
-    "orchestra/testbench": "~6.23"
+    "orchestra/testbench": "~7.0"
   },
   "authors": [
     {
