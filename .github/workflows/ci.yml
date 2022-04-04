@@ -15,11 +15,11 @@ jobs:
       matrix:
         php: [7.3, 7.4, 8, "8.1"]
         laravel: [6, 7, 8, 9]
-      exclude:
-        - php: 7.3
-          laravel: 9
-        - php: 7.4
-          laravel: 9
+        exclude:
+          - php: 7.3
+            laravel: 9
+          - php: 7.4
+            laravel: 9
 
     steps:
       - name: Checkout code
