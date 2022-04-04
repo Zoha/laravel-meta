@@ -32,9 +32,11 @@ jobs:
           tools: composer:v2
           coverage: none
       - name: remove composer lock file
+        run: rm -rf composer.lock
+      - name: install dependencies
         run: |
           composer install 
-          composer require "laravel/framework" : "^${{ matrix.laravel }}"
+          composer require "laravel/framework":"^${{ matrix.laravel }}"
           composer update --prefer-dist --no-interaction --no-progress --ignore-platform-reqs
       - name: Execute tests
         run: vendor/bin/phpunit --verbose
