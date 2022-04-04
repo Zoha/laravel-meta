@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php: [7.3, 7.4]
+        php: [7.4]
         laravel: [8]
         exclude:
           - php: 7.3
@@ -33,6 +33,8 @@ jobs:
           coverage: none
       - name: remove composer lock file
         run: |
+          composer install 
+          composer require "laravel/framework" : "^${{laravel}}"
           composer update --prefer-dist --no-interaction --no-progress --ignore-platform-reqs
       - name: Execute tests
         run: vendor/bin/phpunit --verbose
