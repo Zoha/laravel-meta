@@ -15,12 +15,11 @@
     "reference": "0ac3f7b"
   },
   "require": {
-    "laravel/framework": "^8.0"
+    "laravel/framework": "^8.0|^9.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.5",
-    "orchestra/testbench": "^6.23",
-    "fakerphp/faker": "~1.14"
+    "orchestra/testbench": "^7.0"
   },
   "authors": [
     {
