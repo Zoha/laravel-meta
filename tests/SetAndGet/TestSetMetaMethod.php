@@ -17,12 +17,12 @@ class TestSetMetaMethod extends TestingHelpers
 
     //------------------------------------------ Methods --------------------------------------------//
 
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
         $this->modelTruncate();
         $this->metaTruncate();
-        $this->model = factory(ExampleModel::class)->create();
+        $this->model = ExampleModel::factory()->create();
     }
 
     public function test_add_single_meta_using_set_meta_method()
@@ -217,36 +217,36 @@ class TestSetMetaMethod extends TestingHelpers
     public function test_add_single_meta_with_best_guess_of_type()
     {
         // string
-        $meta = $this->fastCreateMeta('test' , 'testvalue');
+        $meta = $this->fastCreateMeta('test', 'testvalue');
         $this->assertEqualsMeta($meta);
 
         //boolean
-        $meta = $this->fastCreateMeta('test' , true);
-        $this->assertEqualsMeta($meta , 'test' , '1' , MetaFacade::META_TYPE_BOOLEAN );
+        $meta = $this->fastCreateMeta('test', true);
+        $this->assertEqualsMeta($meta, 'test', '1', MetaFacade::META_TYPE_BOOLEAN);
 
-        $meta = $this->fastCreateMeta('test' , false);
-        $this->assertEqualsMeta($meta , 'test' , '0' , MetaFacade::META_TYPE_BOOLEAN);
+        $meta = $this->fastCreateMeta('test', false);
+        $this->assertEqualsMeta($meta, 'test', '0', MetaFacade::META_TYPE_BOOLEAN);
 
         // array json and collection _> to collection
-        $meta = $this->fastCreateMeta('test' , [1,2,3]);
-        $this->assertEqualsMeta($meta , 'test' , '[1,2,3]' , MetaFacade::META_TYPE_COLLECTION);
+        $meta = $this->fastCreateMeta('test', [1, 2, 3]);
+        $this->assertEqualsMeta($meta, 'test', '[1,2,3]', MetaFacade::META_TYPE_COLLECTION);
 
-        $meta = $this->fastCreateMeta('test' , collect([1,2,3]));
-        $this->assertEqualsMeta($meta , 'test' , '[1,2,3]' , MetaFacade::META_TYPE_COLLECTION);
+        $meta = $this->fastCreateMeta('test', collect([1, 2, 3]));
+        $this->assertEqualsMeta($meta, 'test', '[1,2,3]', MetaFacade::META_TYPE_COLLECTION);
 
-        $meta = $this->fastCreateMeta('test' , '[1,2,3]');
-        $this->assertEqualsMeta($meta , 'test' , '[1,2,3]' , MetaFacade::META_TYPE_COLLECTION);
+        $meta = $this->fastCreateMeta('test', '[1,2,3]');
+        $this->assertEqualsMeta($meta, 'test', '[1,2,3]', MetaFacade::META_TYPE_COLLECTION);
 
         // integer
-        $meta = $this->fastCreateMeta('test' , '123');
-        $this->assertEqualsMeta($meta , 'test' , '123' , MetaFacade::META_TYPE_INTEGER);
+        $meta = $this->fastCreateMeta('test', '123');
+        $this->assertEqualsMeta($meta, 'test', '123', MetaFacade::META_TYPE_INTEGER);
 
-        $meta = $this->fastCreateMeta('test' , 123);
-        $this->assertEqualsMeta($meta , 'test' , '123' , MetaFacade::META_TYPE_INTEGER);
+        $meta = $this->fastCreateMeta('test', 123);
+        $this->assertEqualsMeta($meta, 'test', '123', MetaFacade::META_TYPE_INTEGER);
 
         // null
-        $meta = $this->fastCreateMeta('test' , null);
-        $this->assertEqualsMeta($meta , 'test' , null , MetaFacade::META_TYPE_NULL);
+        $meta = $this->fastCreateMeta('test', null);
+        $this->assertEqualsMeta($meta, 'test', null, MetaFacade::META_TYPE_NULL);
     }
 
     public function test_that_false_returned_if_one_of_key_in_multiple_set_meta_was_invalid()
@@ -258,7 +258,7 @@ class TestSetMetaMethod extends TestingHelpers
         ]);
         $this->assertFalse($settingMultipleMeta);
         $allMeta = Meta::all();
-        $this->assertEquals(2,$allMeta->count());
+        $this->assertEquals(2, $allMeta->count());
         $this->metaTruncate();
     }
 
@@ -268,21 +268,21 @@ class TestSetMetaMethod extends TestingHelpers
             'test1' => 'testvalue1',
             'test2' => 'testvalue2',
             'test3' => 'testvalue3'
-        ] , MetaFacade::META_TYPE_NULL);
+        ], MetaFacade::META_TYPE_NULL);
         $allMeta = Meta::all();
         foreach ($allMeta as $meta) {
-            $this->assertEqualsMeta($meta, 'test' . $meta->id, null , MetaFacade::META_TYPE_NULL);
+            $this->assertEqualsMeta($meta, 'test' . $meta->id, null, MetaFacade::META_TYPE_NULL);
         }
         $this->metaTruncate();
 
         $this->model->setMeta([
             'test1' => 'testvalue1',
-            'test2' => [1,2,3],
+            'test2' => [1, 2, 3],
             'test3' => 123
-        ] , MetaFacade::META_TYPE_BOOLEAN);
+        ], MetaFacade::META_TYPE_BOOLEAN);
         $allMeta = Meta::all();
         foreach ($allMeta as $meta) {
-            $this->assertEqualsMeta($meta, 'test' . $meta->id, true , MetaFacade::META_TYPE_BOOLEAN);
+            $this->assertEqualsMeta($meta, 'test' . $meta->id, true, MetaFacade::META_TYPE_BOOLEAN);
         }
         $this->metaTruncate();
     }
@@ -292,21 +292,21 @@ class TestSetMetaMethod extends TestingHelpers
         $this->model->setMeta([
             'test1' => 'testvalue1',
             'test2' => false,
-            'test3' => [1,2,3]
+            'test3' => [1, 2, 3]
         ]);
         $allMeta = Meta::all();
-        $this->assertEqualsMeta($allMeta[0], 'test' . $allMeta[0]->id, 'testvalue1' , MetaFacade::META_TYPE_STRING);
-        $this->assertEqualsMeta($allMeta[1], 'test' . $allMeta[1]->id, '0' , MetaFacade::META_TYPE_BOOLEAN);
-        $this->assertEqualsMeta($allMeta[2], 'test' . $allMeta[2]->id, '[1,2,3]' , MetaFacade::META_TYPE_COLLECTION);
+        $this->assertEqualsMeta($allMeta[0], 'test' . $allMeta[0]->id, 'testvalue1', MetaFacade::META_TYPE_STRING);
+        $this->assertEqualsMeta($allMeta[1], 'test' . $allMeta[1]->id, '0', MetaFacade::META_TYPE_BOOLEAN);
+        $this->assertEqualsMeta($allMeta[2], 'test' . $allMeta[2]->id, '[1,2,3]', MetaFacade::META_TYPE_COLLECTION);
 
         $this->model->setMeta([
             'test1' => 'testvalue2',
             'test2' => true,
-            'test3' => [1,2,3,4,5]
-        ],MetaFacade::META_TYPE_BOOLEAN);
+            'test3' => [1, 2, 3, 4, 5]
+        ], MetaFacade::META_TYPE_BOOLEAN);
         $allMeta = Meta::all();
-        foreach($allMeta as $meta){
-            $this->assertEqualsMeta($meta , 'test'.$meta->id , true , MetaFacade::META_TYPE_BOOLEAN);
+        foreach ($allMeta as $meta) {
+            $this->assertEqualsMeta($meta, 'test' . $meta->id, true, MetaFacade::META_TYPE_BOOLEAN);
         }
         $this->metaTruncate();
     }

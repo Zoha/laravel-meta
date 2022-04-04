@@ -18,12 +18,12 @@ class TestSetMetaUsingProperty extends TestingHelpers
 
     //------------------------------------------ Methods --------------------------------------------//
 
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
         $this->modelTruncate();
         $this->metaTruncate();
-        $this->model = factory(ExampleModel::class)->create();
+        $this->model = ExampleModel::factory()->create();
     }
 
     public function test_add_single_meta_using_property()
@@ -117,11 +117,11 @@ class TestSetMetaUsingProperty extends TestingHelpers
     public function test_add_single_meta_using_property_fail_if_save_method_not_called()
     {
         $this->model->meta->test = 'testvalue';
-        $this->assertEquals(0,Meta::count());
-        $this->model->createMeta('key1' , 'testvalue');
-        $this->assertEquals(1,Meta::count());
+        $this->assertEquals(0, Meta::count());
+        $this->model->createMeta('key1', 'testvalue');
+        $this->assertEquals(1, Meta::count());
         $meta = $this->model->meta->save();
         $this->assertFalse($meta);
-        $this->assertEquals(1 , Meta::count());
+        $this->assertEquals(1, Meta::count());
     }
 }

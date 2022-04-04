@@ -10,19 +10,19 @@ class TestFactories extends TestingHelpers
 {
     public function test_example_model_factory()
     {
-        factory(ExampleModel::class)->create([
+        ExampleModel::factory()->create([
             'title' => 'test title'
         ]);
         $model = ExampleModel::first();
-        $this->assertEquals('test title' , $model->title);
+        $this->assertEquals('test title', $model->title);
 
         $this->truncate();
     }
 
     public function test_meta_model_factory()
     {
-        factory(Meta::class)->create([
-            'key' => 'example key' ,
+        Meta::factory()->create([
+            'key' => 'example key',
             'value' => 'example value',
             'owner_type' => 'owner type',
             'owner_id'   => 10,
@@ -34,7 +34,7 @@ class TestFactories extends TestingHelpers
 
         // assert type and status
         $this->assertEquals(\Zoha\Meta\Helpers\MetaHelper::META_TYPE_STRING, $meta->type);
-        $this->assertTrue((boolean) $meta->status);
+        $this->assertTrue((bool) $meta->status);
 
         //assert owner type and owner key
         $this->assertEquals('owner type', $meta->owner_type);

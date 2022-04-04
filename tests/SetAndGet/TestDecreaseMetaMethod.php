@@ -15,29 +15,29 @@ class TestDecreaseMetaMethod extends TestingHelpers
 
     //------------------------------------------ Methods --------------------------------------------//
 
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
         $this->modelTruncate();
         $this->metaTruncate();
-        $this->model = factory(ExampleModel::class)->create();
+        $this->model = ExampleModel::factory()->create();
     }
 
     public function test_decrease_meta_method()
     {
-        $this->model->setMeta('test' , 1);
+        $this->model->setMeta('test', 1);
         $this->model->decreaseMeta('test');
-        $this->assertEquals(0 , $this->model->meta->test);
+        $this->assertEquals(0, $this->model->meta->test);
 
         $this->model->decreaseMeta('test');
-        $this->assertEquals(-1 , $this->model->meta->test);
+        $this->assertEquals(-1, $this->model->meta->test);
 
-        $this->model->setMeta('test' , 10);
-        $this->model->decreaseMeta('test',4);
-        $this->assertEquals(6 , $this->model->meta->test);
+        $this->model->setMeta('test', 10);
+        $this->model->decreaseMeta('test', 4);
+        $this->assertEquals(6, $this->model->meta->test);
 
-        $this->model->setMeta('test' , 'testvalue');
+        $this->model->setMeta('test', 'testvalue');
         $this->model->decreaseMeta('test');
-        $this->assertEquals('testvalue' , $this->model->meta->test);
+        $this->assertEquals('testvalue', $this->model->meta->test);
     }
 }

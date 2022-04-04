@@ -53,7 +53,6 @@ class TestCase extends \Orchestra\Testbench\TestCase
         $this->app['config']->set('meta', include(__DIR__ . '/../src/Meta/Config/meta.php'));
         $this->loadLaravelMigrations(['--database' => 'laravelmeta']);
         $this->loadMigrationsFrom(__DIR__ . '/../src/Meta/Database/TestCaseMigrations');
-        $this->withFactories(__DIR__ . '/../src/Meta/Database/Factories');
         $this->artisan('migrate', ['--database' => 'laravelmeta']);
     }
 

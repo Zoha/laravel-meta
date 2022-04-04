@@ -252,8 +252,8 @@ class TestingHelpers extends TestCase
 
         $class::truncate();
 
-        if($class = Meta::class){
-            if($this->model != null){
+        if ($class = Meta::class) {
+            if ($this->model != null) {
                 $this->model->truncateMeta();
             }
         }
@@ -340,15 +340,14 @@ class TestingHelpers extends TestCase
         $this->truncate(Meta::class);
         $this->model->setMeta($key, $value, $type);
         return Meta::first();
-
     }
 
     //--------------------------------------- Test Methods -----------------------------------------//
 
     public function test_truncate_method_deletes_all_data_in_all_tables()
     {
-        factory(ExampleModel::class)->create();
-        factory(Meta::class)->create([
+        ExampleModel::factory()->create();
+        Meta::factory()->create([
             'owner_type' => 'test',
             'owner_id'   => 1,
         ]);
@@ -361,8 +360,8 @@ class TestingHelpers extends TestCase
 
     public function test_truncate_method_deletes_all_data_in_specific_tables()
     {
-        factory(ExampleModel::class)->create();
-        factory(Meta::class)->create([
+        ExampleModel::factory()->create();
+        Meta::factory()->create([
             'owner_type' => 'test',
             'owner_id'   => 1,
         ]);
