@@ -34,7 +34,7 @@ jobs:
       - name: remove composer lock file
         run: |
           composer install 
-          composer require "laravel/framework" : "^${{laravel}}"
+          composer require "laravel/framework" : "^${{ matrix.laravel }}"
           composer update --prefer-dist --no-interaction --no-progress --ignore-platform-reqs
       - name: Execute tests
         run: vendor/bin/phpunit --verbose
