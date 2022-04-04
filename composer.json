@@ -19,7 +19,8 @@
   },
   "require-dev": {
     "phpunit/phpunit": "^9.5",
-    "orchestra/testbench": "^6.23"
+    "orchestra/testbench": "^6.23",
+    "fakerphp/faker": "~1.14"
   },
   "authors": [
     {
