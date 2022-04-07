@@ -21,24 +21,24 @@ class TestCustomMetaTable extends TestCase
         CustomMetaTableModel::create([
             'title' => 'custom'
         ]);
-        $this->assertEquals(1 , CustomMetaTableModel::count());
+        $this->assertEquals(1, CustomMetaTableModel::count());
         $customTable = CustomMetaTableModel::first();
 
-        $defaultModel = factory(ExampleModel::class)->create();
+        $defaultModel = ExampleModel::factory()->create();
         $defaultModel->setMeta([
             'key1' => 'value1',
             'key2' => 'value2',
         ]);
 
-        $customTable->setMeta('key3' , 'value3');
+        $customTable->setMeta('key3', 'value3');
 
-        $this->assertEquals(2 , Meta::count());
+        $this->assertEquals(2, Meta::count());
 
-        $this->assertEquals(1 , $customTable->meta->count());
+        $this->assertEquals(1, $customTable->meta->count());
 
-        $customTable->setMeta('key3' , 'value4');
+        $customTable->setMeta('key3', 'value4');
 
-        $this->assertEquals(2 , Meta::count());
-        $this->assertEquals(1 , $customTable->meta->count());
+        $this->assertEquals(2, Meta::count());
+        $this->assertEquals(1, $customTable->meta->count());
     }
 }

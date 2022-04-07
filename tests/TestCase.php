@@ -47,13 +47,12 @@ class TestCase extends \Orchestra\Testbench\TestCase
      *
      * @return void
      */
-    protected function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
-        $this->app['config']->set('meta' , include(__DIR__.'/../src/Meta/Config/meta.php'));
+        $this->app['config']->set('meta', include(__DIR__ . '/../src/Meta/Config/meta.php'));
         $this->loadLaravelMigrations(['--database' => 'laravelmeta']);
-        $this->loadMigrationsFrom(__DIR__ . '/../src/Meta/database/TestCaseMigrations');
-        $this->withFactories(__DIR__ . '/../src/Meta/database/Factories');
+        $this->loadMigrationsFrom(__DIR__ . '/../src/Meta/Database/TestCaseMigrations');
         $this->artisan('migrate', ['--database' => 'laravelmeta']);
     }
 
@@ -62,7 +61,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
     public function test_connection_and_migrations()
     {
         $tableUsersExists = Schema::hasTable('model');
-        $tableMetaExists = Schema::hasTable(config('meta.tables.default' , 'meta'));
+        $tableMetaExists = Schema::hasTable(config('meta.tables.default', 'meta'));
 
         $this->assertTrue($tableUsersExists);
         $this->assertTrue($tableMetaExists);

@@ -3,10 +3,9 @@
 
 namespace Zoha\Meta\Models;
 
-
 use Illuminate\Database\Eloquent\Model;
+use Zoha\Meta\Database\Factories\ExampleModelFactory;
 use Zoha\Metable;
-use Zoha\MetableModel;
 
 class ExampleModel extends Model
 {
@@ -14,4 +13,9 @@ class ExampleModel extends Model
     protected $fillable = ['title'];
 
     use Metable;
+
+    public static function factory()
+    {
+        return ExampleModelFactory::new();
+    }
 }

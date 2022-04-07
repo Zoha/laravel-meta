@@ -2,3 +2,5 @@ vendor/
 .idea/
 meta-package-gif.gif
 notes.txt
+.vscode/
+.phpunit.result.cache

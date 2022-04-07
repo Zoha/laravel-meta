@@ -3,6 +3,7 @@
 namespace Zoha\Meta\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Zoha\Meta\Database\Factories\MetaFactory;
 
 class Meta extends Model
 {
@@ -42,6 +43,11 @@ class Meta extends Model
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->setTable(config('meta.tables.default' , 'meta'));
+        $this->setTable(config('meta.tables.default', 'meta'));
+    }
+
+    public static function factory()
+    {
+        return MetaFactory::new();
     }
 }
