@@ -44,6 +44,7 @@ a laravel package for working with meta !
    - [Meta Model](#meta-model)
    - [Meta Table](#meta-table)
 7. [License](#license)
+8. [Contributing](#contributing)
 
 # Introduction
 
