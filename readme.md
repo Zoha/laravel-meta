@@ -605,3 +605,7 @@ Schema::create('meta', function (Blueprint $table) {
 # License
 
 [![Packagist License](https://img.shields.io/apm/l/vim-mode.svg)](http://choosealicense.com/licenses/mit/)
+
+# contributing
+
+This project is open for you [contribution](https://github.com/Zoha/laravel-meta/blob/master/CONTRIBUTING.md)
