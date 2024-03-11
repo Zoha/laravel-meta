@@ -54,7 +54,7 @@ class TestingHelpers extends TestCase
                 'type'       => \Zoha\Meta\Helpers\MetaHelper::META_TYPE_COLLECTION,
                 'owner_id'   => 1,
                 'owner_type' => 'Zoha\Meta\Models\ExampleModel'
-            ]
+            ],
         ],
         [
             [
@@ -231,6 +231,13 @@ class TestingHelpers extends TestCase
                 'owner_id'   => 5,
                 'owner_type' => 'Zoha\Meta\Models\ExampleModel'
             ],
+            [
+                'key'        => 'key10',
+                'value'      => 12.34,
+                'type'       => \Zoha\Meta\Helpers\MetaHelper::META_TYPE_FLOAT,
+                'owner_id'   => 5,
+                'owner_type' => 'Zoha\Meta\Models\ExampleModel'
+            ],
         ],
     ];
 
@@ -379,7 +386,7 @@ class TestingHelpers extends TestCase
         $this->assertEquals(0, Meta::all()->count());
         $this->seeding();
         $this->assertEquals(5, ExampleModel::all()->count());
-        $this->assertEquals(29, Meta::all()->count());
+        $this->assertEquals(30, Meta::all()->count());
         $this->assertEquals(Meta::find(10)->key, 'key5');
         $this->assertEquals(Meta::find(25)->key, 'key5');
         $this->assertEquals(Meta::find(6)->value, 2);

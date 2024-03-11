@@ -19,7 +19,7 @@ trait SetMeta
      *  ]);
      * @example : setMeta('test1','value1')
      *
-     * @param string $key <p> key of meta </p>
+     * @param string|array $key <p> key of meta </p>
      * @param mixed $value
      * @param $type <p>this type must be const from Meta class </p>
      * @param null|bool $createMeta
@@ -77,7 +77,7 @@ trait SetMeta
     /**
      * updating an existing meta
      *
-     * @param string $key <p> key of meta </p>
+     * @param string|array $key <p> key of meta </p>
      * @param mixed $value
      * @param $type <p>this type must be const from Meta class </p>
      * @return bool : true on success false if meta not founded
@@ -127,7 +127,7 @@ trait SetMeta
         $currentValue = $this->getMeta($key, '000');
         if ($currentValue === '000') {
             return $this->createMeta($key, 0);
-        } elseif (is_int($currentValue)) {
+        } elseif (is_int($currentValue) || is_float($currentValue)) {
             $currentValue += $increaseStep;
             return $this->updateMeta($key, $currentValue);
         }
@@ -146,7 +146,7 @@ trait SetMeta
         $currentValue = $this->getMeta($key, '000');
         if ($currentValue === '000') {
             return $this->createMeta($key, 0, Meta::META_TYPE_INTEGER);
-        } elseif (is_int($currentValue)) {
+        } elseif (is_int($currentValue) || is_float($currentValue)) {
             $currentValue -= $decreaseStep;
             return $this->updateMeta($key, $currentValue);
         }

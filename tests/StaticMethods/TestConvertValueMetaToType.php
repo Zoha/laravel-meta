@@ -71,10 +71,16 @@ class TestConvertValueMetaToType extends TestingHelpers
         $this->assertEquals(0, Meta::convertMetaValueToType(false, Meta::META_TYPE_INTEGER));
     }
 
-    public function test_convert_integer_to_integer()
+    public function test_convert_number_to_integer()
     {
         $this->assertEquals(44, Meta::convertMetaValueToType(44, Meta::META_TYPE_INTEGER));
-        $this->assertEquals(4.4, Meta::convertMetaValueToType(4.4, Meta::META_TYPE_INTEGER));
+        $this->assertEquals(4, Meta::convertMetaValueToType(4.4, Meta::META_TYPE_INTEGER));
+    }
+
+    public function test_convert_number_to_float()
+    {
+        $this->assertEquals(55.0, Meta::convertMetaValueToType(55, Meta::META_TYPE_FLOAT));
+        $this->assertEquals(5.5, Meta::convertMetaValueToType(5.5, Meta::META_TYPE_FLOAT));
     }
 
     public function test_convert_null_to_integer()

@@ -124,6 +124,26 @@ class TestCreateMetaMethod extends TestingHelpers
         $this->assertEqualsMeta($meta, 'test', '123', MetaFacade::META_TYPE_INTEGER);
         $this->metaTruncate();
 
+        //float
+
+        $this->model->createMeta('test', 12.34, MetaFacade::META_TYPE_FLOAT);
+        $this->assertEquals(1, Meta::count());
+        $meta = Meta::first();
+        $this->assertEqualsMeta($meta, 'test', '12.34', MetaFacade::META_TYPE_FLOAT);
+        $this->metaTruncate();
+
+        $this->model->createMeta('test', '12.34', MetaFacade::META_TYPE_FLOAT);
+        $this->assertEquals(1, Meta::count());
+        $meta = Meta::first();
+        $this->assertEqualsMeta($meta, 'test', '12.34', MetaFacade::META_TYPE_FLOAT);
+        $this->metaTruncate();
+
+        $this->model->createMeta('test', '12.34');
+        $this->assertEquals(1, Meta::count());
+        $meta = Meta::first();
+        $this->assertEqualsMeta($meta, 'test', '12.34', MetaFacade::META_TYPE_FLOAT);
+        $this->metaTruncate();
+
         //boolean
 
         $this->model->createMeta('test', 'false', MetaFacade::META_TYPE_BOOLEAN);

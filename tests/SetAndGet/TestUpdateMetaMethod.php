@@ -143,6 +143,22 @@ class TestUpdateMetaMethod extends TestingHelpers
         $this->assertEqualsMeta($meta, 'test', '123', MetaFacade::META_TYPE_INTEGER);
         $this->metaTruncate();
 
+        //float
+
+        $this->createFakeMeta();
+        $this->model->updateMeta('test', 123.45, MetaFacade::META_TYPE_FLOAT);
+        $this->assertEquals(1, Meta::count());
+        $meta = Meta::first();
+        $this->assertEqualsMeta($meta, 'test', '123.45', MetaFacade::META_TYPE_FLOAT);
+        $this->metaTruncate();
+
+        $this->createFakeMeta();
+        $this->model->updateMeta('test', '123.45', MetaFacade::META_TYPE_FLOAT);
+        $this->assertEquals(1, Meta::count());
+        $meta = Meta::first();
+        $this->assertEqualsMeta($meta, 'test', '123.45', MetaFacade::META_TYPE_FLOAT);
+        $this->metaTruncate();
+
         //boolean
 
         $this->createFakeMeta();
@@ -230,6 +246,22 @@ class TestUpdateMetaMethod extends TestingHelpers
         $this->assertEqualsMeta($meta, 'test', '123', MetaFacade::META_TYPE_INTEGER);
         $this->metaTruncate();
 
+        //float
+
+        $this->createFakeMeta();
+        $this->model->updateMeta('test', 123.45);
+        $this->assertEquals(1, Meta::count());
+        $meta = Meta::first();
+        $this->assertEqualsMeta($meta, 'test', '123.45', MetaFacade::META_TYPE_FLOAT);
+        $this->metaTruncate();
+
+        $this->createFakeMeta();
+        $this->model->updateMeta('test', '123.45');
+        $this->assertEquals(1, Meta::count());
+        $meta = Meta::first();
+        $this->assertEqualsMeta($meta, 'test', '123.45', MetaFacade::META_TYPE_FLOAT);
+        $this->metaTruncate();
+
         //boolean
 
         $this->createFakeMeta();
@@ -292,19 +324,22 @@ class TestUpdateMetaMethod extends TestingHelpers
         $this->model->createMeta('test2', 'test');
         $this->model->createMeta('test3', 'test');
         $this->model->createMeta('test4', 'test');
+        $this->model->createMeta('test5', 'test');
 
         $this->model->updateMeta([
             'test1' => 'testvalue1',
             'test2' => true,
             'test3' => [1, 2, 3],
-            'test4' => 123
+            'test4' => 123,
+            'test5' => 123.45
         ]);
-        $this->assertEquals(4, Meta::count());
+        $this->assertEquals(5, Meta::count());
         $meta = Meta::all();
         $this->assertEqualsMeta($meta[0], 'test1', 'testvalue1', MetaFacade::META_TYPE_STRING);
         $this->assertEqualsMeta($meta[1], 'test2', '1', MetaFacade::META_TYPE_BOOLEAN);
         $this->assertEqualsMeta($meta[2], 'test3', '[1,2,3]', MetaFacade::META_TYPE_COLLECTION);
         $this->assertEqualsMeta($meta[3], 'test4', '123', MetaFacade::META_TYPE_INTEGER);
+        $this->assertEqualsMeta($meta[4], 'test5', '123.45', MetaFacade::META_TYPE_FLOAT);
         $this->metaTruncate();
     }
 

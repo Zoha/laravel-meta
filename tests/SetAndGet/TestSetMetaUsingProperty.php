@@ -106,6 +106,19 @@ class TestSetMetaUsingProperty extends TestingHelpers
         $this->assertEqualsMeta($meta, 'test', '123', MetaFacade::META_TYPE_INTEGER);
         $this->metaTruncate();
 
+        // float
+        $this->model->meta->test = '123.45';
+        $this->model->meta->save();
+        $meta = Meta::first();
+        $this->assertEqualsMeta($meta, 'test', '123.45', MetaFacade::META_TYPE_FLOAT);
+        $this->metaTruncate();
+
+        $this->model->meta->test = 123.45;
+        $this->model->meta->save();
+        $meta = Meta::first();
+        $this->assertEqualsMeta($meta, 'test', '123.45', MetaFacade::META_TYPE_FLOAT);
+        $this->metaTruncate();
+
         // null
         $this->model->meta->test = null;
         $this->model->meta->save();

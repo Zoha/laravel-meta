@@ -66,7 +66,9 @@ class TestGuessType extends TestingHelpers
     {
         $this->assertEquals(Meta::META_TYPE_INTEGER , Meta::guessType(123));
         $this->assertEquals(Meta::META_TYPE_INTEGER , Meta::guessType('123'));
-        $this->assertEquals(Meta::META_TYPE_INTEGER , Meta::guessType(1.8));
+        $this->assertEquals(Meta::META_TYPE_FLOAT, Meta::guessType(1.8));
+        $this->assertEquals(Meta::META_TYPE_FLOAT, Meta::guessType('12.34'));
+        $this->assertNotEquals(Meta::META_TYPE_FLOAT, Meta::guessType('12.34a'));
         $this->assertNotEquals(Meta::META_TYPE_INTEGER , Meta::guessType('123s'));
     }
 }
