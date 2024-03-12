@@ -277,11 +277,17 @@ $post->existsMeta('key'); // return true
 
 ### Increase Meta
 
-You can simply increase meta value using `increaseMeta` method
+You can simply increase meta value using `increaseMeta` method. Note that incrementing a float value will not increment the decimal unless specified.
 
 ```PHP
 $post->setMeta('key' , 3);
 $post->increaseMeta('key'); // meta value will change to 4
+
+$post->setMeta('key' , 3.5);
+$post->increaseMeta('key'); // meta value will change to 4.5
+
+$post->setMeta('key' , 3.5);
+$post->increaseMeta('key' , .1); // meta value will change to 3.6
 
 $post->setMeta('key2' , 'not integer value');
 $post->increaseMeta('key2'); // meta value will not change
@@ -296,11 +302,17 @@ $post->increaseMeta('key',3); // meta value will change to 6
 
 ### Decrease Meta
 
-You can simply decrease meta value using `decreaseMeta` method
+You can simply decrease meta value using `decreaseMeta` method. Note that decrementing a float value will not decrement the decimal value unless specified.
 
 ```PHP
 $post->setMeta('key' , 3);
 $post->decreaseMeta('key'); // meta value will change to 2
+
+$post->setMeta('key' , 3.5);
+$post->decreaseMeta('key'); // meta value will change to 2.5
+
+$post->setMeta('key' , 3.5);
+$post->decreaseMeta('key', .1); // meta value will change to 3.4
 
 $post->setMeta('key2' , 'not integer value');
 $post->decreaseMeta('key2'); // meta value will not change
@@ -478,13 +490,19 @@ Note that `with('meta')` will not work
 
 All of `setMeta` , `getMeta` , `updateMeta` And `createMeta` methods accept a third argument that determine meta data type . there are some examples of this feature :
 
-> Available data types : `string` , `integer` , `null` , `collection` , `json` `array` , `boolean`.
+> Available data types : `string` , `integer` , `float` , `null` , `collection` , `json` `array` , `boolean`.
 
 In `setMeta` method
 
 ```PHP
 $post->setMeta('key' , '123' , 'integer');
 $post->meta->key; // 123 ( integer )
+
+$post->setMeta('key' , '123.45' , 'integer');
+$post->meta->key; // 123 ( integer - decimal dropped)
+
+$post->setMeta('key' , '123.45' , 'float');
+$post->meta->key; // 123.45 ( float )
 //----------------------------------
 $post->setMeta('key' , [1,2,3] , 'json');
 $post->meta->key; // "[1,2,3]" ( string - json )

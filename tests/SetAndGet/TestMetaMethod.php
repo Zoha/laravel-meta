@@ -117,6 +117,34 @@ class TestMetaMethod extends TestingHelpers
         $this->assertEqualsMeta($meta, 'test', '123', MetaFacade::META_TYPE_INTEGER);
         $this->metaTruncate();
 
+        //integer
+
+        $this->model->meta('test', 123.45);
+        $this->assertEquals(1, Meta::count());
+        $meta = Meta::first();
+        $this->assertEqualsMeta($meta, 'test', '123.45', MetaFacade::META_TYPE_FLOAT);
+        $this->metaTruncate();
+
+        $this->model->meta('test', '123.45');
+        $this->assertEquals(1, Meta::count());
+        $meta = Meta::first();
+        $this->assertEqualsMeta($meta, 'test', '123.45', MetaFacade::META_TYPE_FLOAT);
+        $this->metaTruncate();
+
+        //float
+
+        $this->model->meta('test', 123.45);
+        $this->assertEquals(1, Meta::count());
+        $meta = Meta::first();
+        $this->assertEqualsMeta($meta, 'test', '123.45', MetaFacade::META_TYPE_FLOAT);
+        $this->metaTruncate();
+
+        $this->model->meta('test', '123.45');
+        $this->assertEquals(1, Meta::count());
+        $meta = Meta::first();
+        $this->assertEqualsMeta($meta, 'test', '123.45', MetaFacade::META_TYPE_FLOAT);
+        $this->metaTruncate();
+
         //boolean
 
         $this->model->meta('test', false, MetaFacade::META_TYPE_BOOLEAN);
@@ -187,6 +215,22 @@ class TestMetaMethod extends TestingHelpers
         $this->assertEquals(1, Meta::count());
         $meta = Meta::first();
         $this->assertEqualsMeta($meta, 'test', '123', MetaFacade::META_TYPE_INTEGER);
+        $this->metaTruncate();
+
+        //float
+
+        $this->model->setMeta('test' , 'testvalue');
+        $this->model->meta('test', 123.45);
+        $this->assertEquals(1, Meta::count());
+        $meta = Meta::first();
+        $this->assertEqualsMeta($meta, 'test', '123.45', MetaFacade::META_TYPE_FLOAT);
+        $this->metaTruncate();
+
+        $this->model->setMeta('test' , 'testvalue');
+        $this->model->meta('test', '123.45');
+        $this->assertEquals(1, Meta::count());
+        $meta = Meta::first();
+        $this->assertEqualsMeta($meta, 'test', '123.45', MetaFacade::META_TYPE_FLOAT);
         $this->metaTruncate();
 
         //boolean

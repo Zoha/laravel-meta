@@ -191,6 +191,39 @@ class TestSetMetaMethod extends TestingHelpers
 
         $meta = $this->fastCreateMeta('test', true, MetaFacade::META_TYPE_INTEGER);
         $this->assertEqualsMeta($meta, 'test', 1, MetaFacade::META_TYPE_INTEGER);
+
+        $meta = $this->fastCreateMeta('test', 12.34, MetaFacade::META_TYPE_INTEGER);
+        $this->assertEqualsMeta($meta, 'test', 12, MetaFacade::META_TYPE_INTEGER);
+
+        $meta = $this->fastCreateMeta('test', '12.34', MetaFacade::META_TYPE_INTEGER);
+        $this->assertEqualsMeta($meta, 'test', 12, MetaFacade::META_TYPE_INTEGER);
+    }
+
+    public function test_using_set_meta_with_custom_type_will_force_meta_type_to_convert__float()
+    {
+        $meta = $this->fastCreateMeta('test', 'testvalue', MetaFacade::META_TYPE_FLOAT);
+        $this->assertEqualsMeta($meta, 'test', 0.0, MetaFacade::META_TYPE_FLOAT);
+
+        $meta = $this->fastCreateMeta('test', [1, 2, 3], MetaFacade::META_TYPE_FLOAT);
+        $this->assertEqualsMeta($meta, 'test', 0.0, MetaFacade::META_TYPE_FLOAT);
+
+        $meta = $this->fastCreateMeta('test', '123', MetaFacade::META_TYPE_FLOAT);
+        $this->assertEqualsMeta($meta, 'test', 123.0, MetaFacade::META_TYPE_FLOAT);
+
+        $meta = $this->fastCreateMeta('test', null, MetaFacade::META_TYPE_FLOAT);
+        $this->assertEqualsMeta($meta, 'test', 0.0, MetaFacade::META_TYPE_FLOAT);
+
+        $meta = $this->fastCreateMeta('test', false, MetaFacade::META_TYPE_FLOAT);
+        $this->assertEqualsMeta($meta, 'test', 0.0, MetaFacade::META_TYPE_FLOAT);
+
+        $meta = $this->fastCreateMeta('test', true, MetaFacade::META_TYPE_FLOAT);
+        $this->assertEqualsMeta($meta, 'test', 1.0, MetaFacade::META_TYPE_FLOAT);
+
+        $meta = $this->fastCreateMeta('test', 12.34, MetaFacade::META_TYPE_FLOAT);
+        $this->assertEqualsMeta($meta, 'test', 12.34, MetaFacade::META_TYPE_FLOAT);
+
+        $meta = $this->fastCreateMeta('test', '12.34', MetaFacade::META_TYPE_FLOAT);
+        $this->assertEqualsMeta($meta, 'test', 12.34, MetaFacade::META_TYPE_FLOAT);
     }
 
     public function test_using_set_meta_with_custom_type_will_force_meta_type_to_convert__boolean()
@@ -243,6 +276,13 @@ class TestSetMetaMethod extends TestingHelpers
 
         $meta = $this->fastCreateMeta('test', 123);
         $this->assertEqualsMeta($meta, 'test', '123', MetaFacade::META_TYPE_INTEGER);
+
+        // float
+        $meta = $this->fastCreateMeta('test', '123.45');
+        $this->assertEqualsMeta($meta, 'test', '123.45', MetaFacade::META_TYPE_FLOAT);
+
+        $meta = $this->fastCreateMeta('test', 123.45);
+        $this->assertEqualsMeta($meta, 'test', '123.45', MetaFacade::META_TYPE_FLOAT);
 
         // null
         $meta = $this->fastCreateMeta('test', null);

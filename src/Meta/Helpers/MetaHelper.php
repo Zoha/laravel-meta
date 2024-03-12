@@ -17,6 +17,7 @@ class MetaHelper
     const META_TYPE_ARRAY = "array";
     const META_TYPE_BOOLEAN = "boolean";
     const META_TYPE_INTEGER = "integer";
+    const META_TYPE_FLOAT = "float";
     const META_TYPE_NULL = "null";
 
     //------------------------------------------ Methods --------------------------------------------//
@@ -76,7 +77,10 @@ class MetaHelper
         if (($value === true || $value === false) && $value !== 1 && $value !== 0) {
             return MetaHelper::META_TYPE_BOOLEAN;
         }
-        if (preg_match('/^[0-9\.]+$/', $value)) {
+        if (preg_match('/^[0-9]+\.[0-9]+$/', $value)) {
+            return MetaHelper::META_TYPE_FLOAT;
+        }
+        if (preg_match('/^\d+$/', $value)) {
             return MetaHelper::META_TYPE_INTEGER;
         }
         return MetaHelper::META_TYPE_STRING;
@@ -101,6 +105,9 @@ class MetaHelper
                 break;
             case MetaHelper::META_TYPE_INTEGER:
                 $value = self::convertToIntegerType($value);
+                break;
+            case MetaHelper::META_TYPE_FLOAT:
+                $value = self::convertToFloatType($value);
                 break;
             case MetaHelper::META_TYPE_COLLECTION :
                 $value = self::convertToCollectionType($value);
@@ -188,8 +195,21 @@ class MetaHelper
         if ($value instanceof Collection || $value instanceof \Illuminate\Support\Collection || is_array($value)) {
             $value = 0;
         }
-        $value = (is_float($value)) ? (float)$value : (int)$value;
-        return $value;
+        return (int)$value;
+    }
+
+    /**
+     * convert given value to integer
+     *
+     * @param $value
+     * @return float|int
+     */
+    protected static function convertToFloatType($value)
+    {
+        if ($value instanceof Collection || $value instanceof \Illuminate\Support\Collection || is_array($value)) {
+            $value = 0;
+        }
+        return (float)$value;
     }
 
     /**
