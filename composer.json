@@ -15,10 +15,10 @@
     "reference": "0ac3f7b"
   },
   "require": {
-    "laravel/framework": "^9.0|^10.0|^11.0"
+    "laravel/framework": ">=9.0"
   },
   "require-dev": {
-    "php": ">=7.4",
+    "php": ">=8.1",
     "phpunit/phpunit": "^9.5|^10.0|^11.0",
     "orchestra/testbench": "^8.0"
   },
