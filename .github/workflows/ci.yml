@@ -20,9 +20,13 @@ jobs:
             laravel: 9
           - php: 7.4
             laravel: 10
+          - php: 8
+            laravel: 10
           - php: 7.4
             laravel: 11
-
+          - php: 8
+            laravel: 11
+         
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
