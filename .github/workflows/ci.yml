@@ -37,7 +37,7 @@ jobs:
         run: |
           composer require "laravel/framework=^${{ matrix.laravel }}" --no-update
           if [ "${{ matrix.laravel }}" = "11" ]; then
-            composer require "orchestra/testbench=^9.0@dev" --no-update
+            composer require "orchestra/testbench=9.x-dev" --no-update
           fi
           composer update --prefer-dist --no-interaction --no-progress
       - name: Execute tests
