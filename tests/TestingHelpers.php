@@ -298,6 +298,15 @@ class TestingHelpers extends TestCase
         }
     }
 
+    public function replaceOwnerType(string $type): void
+    {
+        foreach ($this->fakeDataMeta as $i => $item) {
+            foreach ($item as $j => $meta) {
+                $this->fakeDataMeta[$i][$j]['owner_type'] = $type;
+            }
+        }
+    }
+
     /**
      * delete all meta data from db
      *
