@@ -431,7 +431,7 @@ trait MetaClauses
         $table = $this->getMetaTable();
         return $query->leftJoin($table . ' as meta' . $this->countOfMetaJoins, function ($q) use ($key) {
             $q->on('meta' . $this->countOfMetaJoins . '.owner_id', '=', $this->getTable() . ".id");
-            $q->where('meta' . $this->countOfMetaJoins . '.owner_type', '=', static::class);
+            $q->where('meta' . $this->countOfMetaJoins . '.owner_type', '=', $this->getMorphClass());
             $q->where('meta' . $this->countOfMetaJoins . '.key', $key);
         })
             ->orderByRaw("CASE (meta" . $this->countOfMetaJoins . ".key)
